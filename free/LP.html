@@ -1,151 +1,243 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>給料計算</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>給料計算</title>
 
-<style>
-    body {
-        font-family: sans-serif;
-        padding: 20px;
-        max-width: 480px;
-        margin: auto;
-    }
-    .job-btn {
-        width: 48%;
-        padding: 15px;
-        margin: 2px;
-        font-size: 20px;
-        text-align: center;
-        border-radius: 8px;
-        border: none;
-        color: white;
-    }
-    .settei { background: #007bff; }
-    .annai { background: #28a745; }
-    .job-btn.active { border: 3px solid #000; }
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 480px;
+            margin: auto;
+        }
 
-    .box {
-        margin-top: 20px;
-    }
-    input {
-        width: 100%;
-        padding: 12px;
-        font-size: 18px;
-        margin-top: 5px;
-    }
-    #result {
-        margin-top: 20px;
-        font-size: 26px;
-        font-weight: bold;
-    }
-</style>
+        .job-btn {
+            width: 48%;
+            padding: 15px;
+            margin: 2px;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            color: white;
+        }
+
+        .settei {
+            background: #007bff;
+        }
+
+        .annai {
+            background: #28a745;
+        }
+
+        .job-btn.active {
+            border: 3px solid #000;
+        }
+
+        .box {
+            margin-top: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .time-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .now-btn {
+            padding: 10px;
+            font-size: 16px;
+            background: #ffc107;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>給料計算</h2>
+    <h2>給料計算</h2>
 
-<!-- 職種切替ボタン（機能8） -->
-<div>
-    <button class="job-btn settei active" id="btn_settei">設撤</button>
-    <button class="job-btn annai" id="btn_annai">案内</button>
-</div>
+    <!-- 職種切替ボタン（機能8） -->
+    <div>
+        <button class="job-btn settei active" id="btn_settei">設撤</button>
+        <button class="job-btn annai" id="btn_annai">案内</button>
+    </div>
 
-<div class="box">
-    <label>開始時刻</label>
-    <input type="time" id="start">
-</div>
+    <div class="box">
+        <label>開始時刻</label>
+        <div class="time-box">
+            <input type="time" id="start">
+            <button class="now-btn" id="btn_start_now">現在</button>
+        </div>
+    </div>
 
-<div class="box">
-    <label>終了時刻</label>
-    <input type="time" id="end">
-</div>
+    <div class="box">
+        <label>終了時刻</label>
+        <div class="time-box">
+            <input type="time" id="end">
+            <button class="now-btn" id="btn_end_now">現在</button>
+        </div>
+    </div>
 
-<div id="result">給料：0 円</div>
+    <button class="reset-btn" id="btn_reset">リセット</button>
 
-<script>
-// 選択された職種
-let jobType = "設撤";
+    <div id="result">給料：0 円</div>
 
-// ボタン切替
-document.getElementById("btn_settei").onclick = () => {
-    jobType = "設撤";
-    updateButtons();
-    calcSalary();
-};
-document.getElementById("btn_annai").onclick = () => {
-    jobType = "案内";
-    updateButtons();
-    calcSalary();
-};
+    <script>
+        // 選択された職種
+        let jobType = "設撤";
 
-// ボタンの見た目更新
-function updateButtons() {
-    document.getElementById("btn_settei").classList.remove("active");
-    document.getElementById("btn_annai").classList.remove("active");
+        // ボタン切替
+        document.getElementById("btn_settei").onclick = () => {
+            jobType = "設撤";
+            updateButtons();
+            calcSalary();
+        };
+        document.getElementById("btn_annai").onclick = () => {
+            jobType = "案内";
+            updateButtons();
+            calcSalary();
+        };
 
-    if (jobType === "設撤") {
-        document.getElementById("btn_settei").classList.add("active");
-    } else {
-        document.getElementById("btn_annai").classList.add("active");
-    }
-}
+        // ボタンの見た目更新
+        function updateButtons() {
+            document.getElementById("btn_settei").classList.remove("active");
+            document.getElementById("btn_annai").classList.remove("active");
 
-// 時間入力で自動計算（機能2・3）
-document.getElementById("start").addEventListener("input", calcSalary);
-document.getElementById("end").addEventListener("input", calcSalary);
+            if (jobType === "設撤") {
+                document.getElementById("btn_settei").classList.add("active");
+            } else {
+                document.getElementById("btn_annai").classList.add("active");
+            }
+        }
+
+        // 時間入力で自動計算（機能2・3）
+        document.getElementById("start").addEventListener("input", calcSalary);
+        document.getElementById("end").addEventListener("input", calcSalary);
+
+        // 現在時刻セット
+        const setNow = (id) => {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById(id).value = `${h}:${m}`;
+            calcSalary();
+        };
+
+        document.getElementById("btn_start_now").onclick = () => setNow("start");
+        document.getElementById("btn_end_now").onclick = () => setNow("end");
+
+        // リセット
+        document.getElementById("btn_reset").onclick = () => {
+            document.getElementById("start").value = "";
+            document.getElementById("end").value = "";
+            document.getElementById("result").innerText = "給料：0 円";
+        };
 
 
-// 深夜区間（22:00〜翌5:00）を計算
-function calcNightHours(start, end) {
-    let nightStart = 22;
-    let nightEnd = 29; // 翌5時 → 24 + 5 = 29 として計算
+        // 深夜区間（22:00〜翌5:00）を計算
+        function calcNightHours(start, end) {
+            let nightStart = 22;
+            let nightEnd = 29; // 翌5時 → 24 + 5 = 29 として計算
 
-    let s = start;
-    let e = end < start ? end + 24 : end; // 翌日扱い
+            let s = start;
+            let e = end < start ? end + 24 : end; // 翌日扱い
 
-    let nightHours = 0;
+            let nightHours = 0;
 
-    if (e > nightStart && s < nightEnd) {
-        let ns = Math.max(s, nightStart);
-        let ne = Math.min(e, nightEnd);
-        nightHours = ne - ns;
-    }
-    return nightHours;
-}
+            if (e > nightStart && s < nightEnd) {
+                let ns = Math.max(s, nightStart);
+                let ne = Math.min(e, nightEnd);
+                nightHours = ne - ns;
+            }
+            return nightHours;
+        }
 
 
-// メイン給料計算
-function calcSalary() {
-    const startValue = document.getElementById("start").value;
-    const endValue = document.getElementById("end").value;
+        // メイン給料計算
+        function calcSalary() {
+            const startValue = document.getElementById("start").value;
+            const endValue = document.getElementById("end").value;
 
-    if (!startValue || !endValue) return;
+            if (!startValue || !endValue) return;
 
-    // 時刻→小数時間に変換
-    let [sh, sm] = startValue.split(":").map(Number);
-    let [eh, em] = endValue.split(":").map(Number);
+            // 時刻→小数時間に変換
+            let [sh, sm] = startValue.split(":").map(Number);
+            let [eh, em] = endValue.split(":").map(Number);
 
-    let startHour = sh + sm / 60;
-    let endHour = eh + em / 60;
+            let startHour = sh + sm / 60;
+            let endHour = eh + em / 60;
 
-    // 翌日対応
-    if (endHour < startHour) endHour += 24;
+            // 翌日対応
+            if (endHour < startHour) endHour += 24;
 
-    let totalHours = endHour - startHour;
+            let totalHours = endHour - startHour;
 
-    // 職種ごとの設定
-    let base, overtime, nightAdd;
-    if (jobType === "設撤") {
-        base = 1250;
-        overtime = 1668;
-        nightAdd = 338;
-    } else {
-        base = 1300;
-        overtime = 1563;
-        nightAdd = 313;
-    }
+            // 職種ごとの設定
+            let base, overtime, nightAdd;
+            if (jobType === "設撤") {
+                base = 1250;
+                overtime = 1668;
+                nightAdd = 338;
+            } else {
+                base = 1300;
+                overtime = 1563;
+                nightAdd = 313;
+            }
 
-    // 3
+            // 3時間以下 → 一律4050円
+            if (totalHours <= 3) {
+                document.getElementById("result").innerText = "給料：4050 円";
+                return;
+            }
+
+            // 8時間以内の基本給
+            let salary = 0;
+            if (totalHours <= 8) {
+                salary = totalHours * base;
+            } else {
+                salary = 8 * base + (totalHours - 8) * overtime;
+            }
+
+            // 深夜時間（22:00〜翌5:00）
+            let nightHours = calcNightHours(startHour, endHour);
+            salary += nightHours * nightAdd;
+
+            document.getElementById("result").innerText = `給料：${Math.floor(salary)} 円`;
+        }
+    </script>
+
+</body>
+
+</html>
