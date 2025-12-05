@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f98f89f2e2b1f77153e59e6541703eb3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f98f89f2e2b1f77153e59e6541703eb3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f98f89f2e2b1f77153e59e6541703eb3 = L.map(
+                "map_f98f89f2e2b1f77153e59e6541703eb3",
+                {
+                    center: [34.997933333333336, 135.7937333333333],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7341d13697fa149151989a0499e2e017 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7341d13697fa149151989a0499e2e017.addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var marker_2dd897b04810954d83979914afb74d4a = L.marker(
+                [34.9858, 135.7588],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_48b38733dbea5fdb411911eecf61c227 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c86e3928d4a8edc6f63428d1e820eaf4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5125dee83abcc8d361eeeaac0232d3f1 = $(`<div id="html_5125dee83abcc8d361eeeaac0232d3f1" style="width: 100.0%; height: 100.0%;">Kyoto Station (A)</div>`)[0];
+                popup_c86e3928d4a8edc6f63428d1e820eaf4.setContent(html_5125dee83abcc8d361eeeaac0232d3f1);
+            
+        
+
+        marker_2dd897b04810954d83979914afb74d4a.bindPopup(popup_c86e3928d4a8edc6f63428d1e820eaf4)
+        ;
+
+        
+    
+    
+                marker_2dd897b04810954d83979914afb74d4a.setIcon(icon_48b38733dbea5fdb411911eecf61c227);
+            
+    
+            var marker_3db8ec1f6d3c2b8e66d4cf76f1876243 = L.marker(
+                [34.9949, 135.785],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_e5c3425ffa3a3e55f45348c3b8b61cbb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d839c1719e6a903e87ad02e723eeda88 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_79c9af9aebe1ed96568edffeac4101dd = $(`<div id="html_79c9af9aebe1ed96568edffeac4101dd" style="width: 100.0%; height: 100.0%;">Kiyomizu-dera (B)</div>`)[0];
+                popup_d839c1719e6a903e87ad02e723eeda88.setContent(html_79c9af9aebe1ed96568edffeac4101dd);
+            
+        
+
+        marker_3db8ec1f6d3c2b8e66d4cf76f1876243.bindPopup(popup_d839c1719e6a903e87ad02e723eeda88)
+        ;
+
+        
+    
+    
+                marker_3db8ec1f6d3c2b8e66d4cf76f1876243.setIcon(icon_e5c3425ffa3a3e55f45348c3b8b61cbb);
+            
+    
+            var poly_line_707aaf8aae6d83f66f1e7bc0d37a144a = L.polyline(
+                [[34.9858, 135.7588], [34.9949, 135.785]],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "black", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var circle_bf0a95ddb0aae818050d15a405fb6831 = L.circle(
+                [34.997933333333336, 135.7937333333333],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1728.159111022624, "stroke": true, "weight": 3}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+        var popup_d8082632e6be475c552e3e6f1b37c004 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6ccb60cb7c7f3bf8f947e6c4db76bf52 = $(`<div id="html_6ccb60cb7c7f3bf8f947e6c4db76bf52" style="width: 100.0%; height: 100.0%;">Apollonius Circle (k=2.0)</div>`)[0];
+                popup_d8082632e6be475c552e3e6f1b37c004.setContent(html_6ccb60cb7c7f3bf8f947e6c4db76bf52);
+            
+        
+
+        circle_bf0a95ddb0aae818050d15a405fb6831.bindPopup(popup_d8082632e6be475c552e3e6f1b37c004)
+        ;
+
+        
+    
+    
+            var marker_26c59bf9f820c1887d09a87e233817f3 = L.marker(
+                [34.997933333333336, 135.80113917879694],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_9a4159bb344b1ce55e7de009f2ffbeeb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_017999b590f57c252339550b843ee2ef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_17efc5b9e34aaab6951e446da7e952bf = $(`<div id="html_17efc5b9e34aaab6951e446da7e952bf" style="width: 100.0%; height: 100.0%;">Candidate Info Center 1</div>`)[0];
+                popup_017999b590f57c252339550b843ee2ef.setContent(html_17efc5b9e34aaab6951e446da7e952bf);
+            
+        
+
+        marker_26c59bf9f820c1887d09a87e233817f3.bindPopup(popup_017999b590f57c252339550b843ee2ef)
+        ;
+
+        
+    
+    
+                marker_26c59bf9f820c1887d09a87e233817f3.setIcon(icon_9a4159bb344b1ce55e7de009f2ffbeeb);
+            
+    
+            var marker_f91e8b0ff2f5a5f1165eebe38e334a3e = L.marker(
+                [35.00370307619886, 135.7960218654393],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_248214cc13976b8f71ea6bd5fc4bf61d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1c526503614ba5e8e3c5d4200fb00571 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3a500114df6a442d8a08e438b2b8fa3f = $(`<div id="html_3a500114df6a442d8a08e438b2b8fa3f" style="width: 100.0%; height: 100.0%;">Candidate Info Center 2</div>`)[0];
+                popup_1c526503614ba5e8e3c5d4200fb00571.setContent(html_3a500114df6a442d8a08e438b2b8fa3f);
+            
+        
+
+        marker_f91e8b0ff2f5a5f1165eebe38e334a3e.bindPopup(popup_1c526503614ba5e8e3c5d4200fb00571)
+        ;
+
+        
+    
+    
+                marker_f91e8b0ff2f5a5f1165eebe38e334a3e.setIcon(icon_248214cc13976b8f71ea6bd5fc4bf61d);
+            
+    
+            var marker_cd0821d5f34c79ae65588752607837fd = L.marker(
+                [35.00149923053058, 135.78774187849552],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_42c667b4b3bc7f0970905a8c0160051f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_64dfd444ddf2b85800c8c1fc9841db65 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_640b9dca2f08c943392aa2b3c302179f = $(`<div id="html_640b9dca2f08c943392aa2b3c302179f" style="width: 100.0%; height: 100.0%;">Candidate Info Center 3</div>`)[0];
+                popup_64dfd444ddf2b85800c8c1fc9841db65.setContent(html_640b9dca2f08c943392aa2b3c302179f);
+            
+        
+
+        marker_cd0821d5f34c79ae65588752607837fd.bindPopup(popup_64dfd444ddf2b85800c8c1fc9841db65)
+        ;
+
+        
+    
+    
+                marker_cd0821d5f34c79ae65588752607837fd.setIcon(icon_42c667b4b3bc7f0970905a8c0160051f);
+            
+    
+            var marker_e2f1ab1f2c56c6f3b3bf1b69fbcd6e9f = L.marker(
+                [34.994367436136095, 135.78774187849552],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_fb649fbefb09aaba42e40181f435f7aa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d223349ba88a647cb03bbb6723f8b72b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fd552885fe8c4c3cc759e87898184884 = $(`<div id="html_fd552885fe8c4c3cc759e87898184884" style="width: 100.0%; height: 100.0%;">Candidate Info Center 4</div>`)[0];
+                popup_d223349ba88a647cb03bbb6723f8b72b.setContent(html_fd552885fe8c4c3cc759e87898184884);
+            
+        
+
+        marker_e2f1ab1f2c56c6f3b3bf1b69fbcd6e9f.bindPopup(popup_d223349ba88a647cb03bbb6723f8b72b)
+        ;
+
+        
+    
+    
+                marker_e2f1ab1f2c56c6f3b3bf1b69fbcd6e9f.setIcon(icon_fb649fbefb09aaba42e40181f435f7aa);
+            
+    
+            var marker_0a750fa35b37c2ac0e0f2c439bc60d09 = L.marker(
+                [34.99216359046781, 135.7960218654393],
+                {
+}
+            ).addTo(map_f98f89f2e2b1f77153e59e6541703eb3);
+        
+    
+            var icon_2b679217769a03181ecc9666e1a9f3fb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aac6350ef62f9abf20ff6369b372721b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1b11ced5d14bdd3adfc69b0b0017d928 = $(`<div id="html_1b11ced5d14bdd3adfc69b0b0017d928" style="width: 100.0%; height: 100.0%;">Candidate Info Center 5</div>`)[0];
+                popup_aac6350ef62f9abf20ff6369b372721b.setContent(html_1b11ced5d14bdd3adfc69b0b0017d928);
+            
+        
+
+        marker_0a750fa35b37c2ac0e0f2c439bc60d09.bindPopup(popup_aac6350ef62f9abf20ff6369b372721b)
+        ;
+
+        
+    
+    
+                marker_0a750fa35b37c2ac0e0f2c439bc60d09.setIcon(icon_2b679217769a03181ecc9666e1a9f3fb);
+            
+</script>
+</html>
