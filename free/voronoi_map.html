@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_91a1ee76bd8ae17ace8c96a4955d958e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; 
+            top: 10px; right: 10px; width: 250px; height: auto; 
+            background-color: white; z-index:9999; font-size:14px;
+            border:2px solid grey; border-radius: 5px; padding: 10px">
+<h4 style="margin-top:0; margin-bottom:10px;">京都観光地のボロノイ図</h4>
+<p style="margin: 5px 0;">各色の領域は、その色の観光地が最も近いエリアを示します。</p>
+
+    <p style="margin: 3px 0;">
+        <span style="background-color:#FF6B6B; 
+                     padding: 3px 8px; 
+                     border-radius: 3px; 
+                     color: white; 
+                     font-weight: bold;">■</span> 
+        清水寺
+    </p>
+    
+    <p style="margin: 3px 0;">
+        <span style="background-color:#4ECDC4; 
+                     padding: 3px 8px; 
+                     border-radius: 3px; 
+                     color: white; 
+                     font-weight: bold;">■</span> 
+        金閣寺
+    </p>
+    
+    <p style="margin: 3px 0;">
+        <span style="background-color:#45B7D1; 
+                     padding: 3px 8px; 
+                     border-radius: 3px; 
+                     color: white; 
+                     font-weight: bold;">■</span> 
+        嵐山
+    </p>
+    
+    <p style="margin: 3px 0;">
+        <span style="background-color:#FFA07A; 
+                     padding: 3px 8px; 
+                     border-radius: 3px; 
+                     color: white; 
+                     font-weight: bold;">■</span> 
+        祇園
+    </p>
+    
+    <p style="margin: 3px 0;">
+        <span style="background-color:#98D8C8; 
+                     padding: 3px 8px; 
+                     border-radius: 3px; 
+                     color: white; 
+                     font-weight: bold;">■</span> 
+        京都駅
+    </p>
+    </div>
+    
+            <div class="folium-map" id="map_91a1ee76bd8ae17ace8c96a4955d958e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_91a1ee76bd8ae17ace8c96a4955d958e = L.map(
+                "map_91a1ee76bd8ae17ace8c96a4955d958e",
+                {
+                    center: [35.00664, 135.7437],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 11,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6bf4917312f38dbed9cc79c9013f9da8 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6bf4917312f38dbed9cc79c9013f9da8.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+        function geo_json_e0c39a60f7f6a1661501eb3501002569_styler(feature) {
+            switch(feature.properties.label) {
+                default:
+                    return {"color": "#FF6B6B", "fillColor": "#FF6B6B", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_e0c39a60f7f6a1661501eb3501002569_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_e0c39a60f7f6a1661501eb3501002569 = L.geoJson(null, {
+                onEachFeature: geo_json_e0c39a60f7f6a1661501eb3501002569_onEachFeature,
+            
+                style: geo_json_e0c39a60f7f6a1661501eb3501002569_styler,
+            ...{
+}
+        });
+
+        function geo_json_e0c39a60f7f6a1661501eb3501002569_add (data) {
+            geo_json_e0c39a60f7f6a1661501eb3501002569
+                .addData(data);
+        }
+            geo_json_e0c39a60f7f6a1661501eb3501002569_add({"features": [{"geometry": {"coordinates": [[[135.77017795276467, 34.99370699163601], [135.8180885226581, 35.01655461490158], [135.8175098328046, 34.958367380048664], [135.7881957331224, 34.95856115882823], [135.77017795276467, 34.99370699163601]]], "type": "Polygon"}, "properties": {"label": "Kiyomizu-dera (\u6e05\u6c34\u5bfa)"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+        var popup_27791b12da2cad8b56b9994a6263a34e = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_534480405b2b87bed66901338fd38546 = $(`<div id="html_534480405b2b87bed66901338fd38546" style="width: 100.0%; height: 100.0%;"><b>Kiyomizu-dera (清水寺)</b>の領域</div>`)[0];
+                popup_27791b12da2cad8b56b9994a6263a34e.setContent(html_534480405b2b87bed66901338fd38546);
+            
+        
+
+        geo_json_e0c39a60f7f6a1661501eb3501002569.bindPopup(popup_27791b12da2cad8b56b9994a6263a34e)
+        ;
+
+        
+    
+    
+            geo_json_e0c39a60f7f6a1661501eb3501002569.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+        function geo_json_835e0a7766e217c7ee2acb52ce93b5e9_styler(feature) {
+            switch(feature.properties.label) {
+                default:
+                    return {"color": "#4ECDC4", "fillColor": "#4ECDC4", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_835e0a7766e217c7ee2acb52ce93b5e9_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_835e0a7766e217c7ee2acb52ce93b5e9 = L.geoJson(null, {
+                onEachFeature: geo_json_835e0a7766e217c7ee2acb52ce93b5e9_onEachFeature,
+            
+                style: geo_json_835e0a7766e217c7ee2acb52ce93b5e9_styler,
+            ...{
+}
+        });
+
+        function geo_json_835e0a7766e217c7ee2acb52ce93b5e9_add (data) {
+            geo_json_835e0a7766e217c7ee2acb52ce93b5e9
+                .addData(data);
+        }
+            geo_json_835e0a7766e217c7ee2acb52ce93b5e9_add({"features": [{"geometry": {"coordinates": [[[135.74480365702007, 35.01289952357042], [135.71421425578296, 35.00145998388861], [135.66784987220575, 35.0668046620767], [135.8013109225641, 35.065996361804224], [135.74480365702007, 35.01289952357042]]], "type": "Polygon"}, "properties": {"label": "Kinkaku-ji (\u91d1\u95a3\u5bfa)"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+        var popup_357374e2e755695edb9a3677dea7d46d = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_6c7699e605239926086c38a774eafb76 = $(`<div id="html_6c7699e605239926086c38a774eafb76" style="width: 100.0%; height: 100.0%;"><b>Kinkaku-ji (金閣寺)</b>の領域</div>`)[0];
+                popup_357374e2e755695edb9a3677dea7d46d.setContent(html_6c7699e605239926086c38a774eafb76);
+            
+        
+
+        geo_json_835e0a7766e217c7ee2acb52ce93b5e9.bindPopup(popup_357374e2e755695edb9a3677dea7d46d)
+        ;
+
+        
+    
+    
+            geo_json_835e0a7766e217c7ee2acb52ce93b5e9.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+        function geo_json_6839fa3abc9c79434bf0e80a067a0870_styler(feature) {
+            switch(feature.properties.label) {
+                default:
+                    return {"color": "#45B7D1", "fillColor": "#45B7D1", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_6839fa3abc9c79434bf0e80a067a0870_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_6839fa3abc9c79434bf0e80a067a0870 = L.geoJson(null, {
+                onEachFeature: geo_json_6839fa3abc9c79434bf0e80a067a0870_onEachFeature,
+            
+                style: geo_json_6839fa3abc9c79434bf0e80a067a0870_styler,
+            ...{
+}
+        });
+
+        function geo_json_6839fa3abc9c79434bf0e80a067a0870_add (data) {
+            geo_json_6839fa3abc9c79434bf0e80a067a0870
+                .addData(data);
+        }
+            geo_json_6839fa3abc9c79434bf0e80a067a0870_add({"features": [{"geometry": {"coordinates": [[[135.71421425578296, 35.00145998388861], [135.69819601317536, 34.95911188562377], [135.63343614298776, 34.959466902992155], [135.634265697642, 35.0669849349641], [135.66784987220575, 35.0668046620767], [135.71421425578296, 35.00145998388861]]], "type": "Polygon"}, "properties": {"label": "Arashiyama (\u5d50\u5c71)"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+        var popup_c2f217b7d94582599adb634600a1e382 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_fd641541145f1c595164ddba58622b18 = $(`<div id="html_fd641541145f1c595164ddba58622b18" style="width: 100.0%; height: 100.0%;"><b>Arashiyama (嵐山)</b>の領域</div>`)[0];
+                popup_c2f217b7d94582599adb634600a1e382.setContent(html_fd641541145f1c595164ddba58622b18);
+            
+        
+
+        geo_json_6839fa3abc9c79434bf0e80a067a0870.bindPopup(popup_c2f217b7d94582599adb634600a1e382)
+        ;
+
+        
+    
+    
+            geo_json_6839fa3abc9c79434bf0e80a067a0870.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+        function geo_json_53324005d9e628667f76171245fa9631_styler(feature) {
+            switch(feature.properties.label) {
+                default:
+                    return {"color": "#FFA07A", "fillColor": "#FFA07A", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_53324005d9e628667f76171245fa9631_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_53324005d9e628667f76171245fa9631 = L.geoJson(null, {
+                onEachFeature: geo_json_53324005d9e628667f76171245fa9631_onEachFeature,
+            
+                style: geo_json_53324005d9e628667f76171245fa9631_styler,
+            ...{
+}
+        });
+
+        function geo_json_53324005d9e628667f76171245fa9631_add (data) {
+            geo_json_53324005d9e628667f76171245fa9631
+                .addData(data);
+        }
+            geo_json_53324005d9e628667f76171245fa9631_add({"features": [{"geometry": {"coordinates": [[[135.77017795276467, 34.99370699163601], [135.74480365702007, 35.01289952357042], [135.8013109225641, 35.065996361804224], [135.81858039412174, 35.06588103871705], [135.8180885226581, 35.01655461490158], [135.77017795276467, 34.99370699163601]]], "type": "Polygon"}, "properties": {"label": "Gion (\u7947\u5712)"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+        var popup_384ca1955a096ba77a37db39fb439013 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_6929f26f32c14883fff1296ff02e9661 = $(`<div id="html_6929f26f32c14883fff1296ff02e9661" style="width: 100.0%; height: 100.0%;"><b>Gion (祇園)</b>の領域</div>`)[0];
+                popup_384ca1955a096ba77a37db39fb439013.setContent(html_6929f26f32c14883fff1296ff02e9661);
+            
+        
+
+        geo_json_53324005d9e628667f76171245fa9631.bindPopup(popup_384ca1955a096ba77a37db39fb439013)
+        ;
+
+        
+    
+    
+            geo_json_53324005d9e628667f76171245fa9631.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+        function geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_styler(feature) {
+            switch(feature.properties.label) {
+                default:
+                    return {"color": "#98D8C8", "fillColor": "#98D8C8", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+
+        function geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_68d93b675b9e9f81ce6b6220cfb1c00e = L.geoJson(null, {
+                onEachFeature: geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_onEachFeature,
+            
+                style: geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_styler,
+            ...{
+}
+        });
+
+        function geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_add (data) {
+            geo_json_68d93b675b9e9f81ce6b6220cfb1c00e
+                .addData(data);
+        }
+            geo_json_68d93b675b9e9f81ce6b6220cfb1c00e_add({"features": [{"geometry": {"coordinates": [[[135.71421425578296, 35.00145998388861], [135.74480365702007, 35.01289952357042], [135.77017795276467, 34.99370699163601], [135.7881957331224, 34.95856115882823], [135.69819601317536, 34.95911188562377], [135.71421425578296, 35.00145998388861]]], "type": "Polygon"}, "properties": {"label": "Kyoto Station (\u4eac\u90fd\u99c5)"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+        var popup_0b9f1f661351086a4e641963bbf1e4ca = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_940be7e3b3761c10424f2e4abec0896d = $(`<div id="html_940be7e3b3761c10424f2e4abec0896d" style="width: 100.0%; height: 100.0%;"><b>Kyoto Station (京都駅)</b>の領域</div>`)[0];
+                popup_0b9f1f661351086a4e641963bbf1e4ca.setContent(html_940be7e3b3761c10424f2e4abec0896d);
+            
+        
+
+        geo_json_68d93b675b9e9f81ce6b6220cfb1c00e.bindPopup(popup_0b9f1f661351086a4e641963bbf1e4ca)
+        ;
+
+        
+    
+    
+            geo_json_68d93b675b9e9f81ce6b6220cfb1c00e.addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var marker_0df0547ff8b4114fe3f91a528bc664ea = L.marker(
+                [34.9949, 135.785],
+                {
+}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var icon_fe5f0e2df0c95f4a41db698e067ba11b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eac6191787f7f4fd04bd6fd0987ed27f = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_9bbd86c2426575dc227467dcbf637476 = $(`<div id="html_9bbd86c2426575dc227467dcbf637476" style="width: 100.0%; height: 100.0%;"><b>清水寺</b></div>`)[0];
+                popup_eac6191787f7f4fd04bd6fd0987ed27f.setContent(html_9bbd86c2426575dc227467dcbf637476);
+            
+        
+
+        marker_0df0547ff8b4114fe3f91a528bc664ea.bindPopup(popup_eac6191787f7f4fd04bd6fd0987ed27f)
+        ;
+
+        
+    
+    
+            marker_0df0547ff8b4114fe3f91a528bc664ea.bindTooltip(
+                `<div>
+                     清水寺
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0df0547ff8b4114fe3f91a528bc664ea.setIcon(icon_fe5f0e2df0c95f4a41db698e067ba11b);
+            
+    
+            var circle_marker_4108ceedc3865bddbc524b057476e411 = L.circleMarker(
+                [34.9949, 135.785],
+                {"bubblingMouseEvents": true, "color": "#FF6B6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF6B6B", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var marker_2af89f62b32120d964369b8f73fc4537 = L.marker(
+                [35.0394, 135.7292],
+                {
+}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var icon_d91be0d0f3a2332b051739c0ded535d6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ede05c22adbb7a50fdd1f463645a0f10 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_e3f79288f3c122e9606c69ca7f507f2e = $(`<div id="html_e3f79288f3c122e9606c69ca7f507f2e" style="width: 100.0%; height: 100.0%;"><b>金閣寺</b></div>`)[0];
+                popup_ede05c22adbb7a50fdd1f463645a0f10.setContent(html_e3f79288f3c122e9606c69ca7f507f2e);
+            
+        
+
+        marker_2af89f62b32120d964369b8f73fc4537.bindPopup(popup_ede05c22adbb7a50fdd1f463645a0f10)
+        ;
+
+        
+    
+    
+            marker_2af89f62b32120d964369b8f73fc4537.bindTooltip(
+                `<div>
+                     金閣寺
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2af89f62b32120d964369b8f73fc4537.setIcon(icon_d91be0d0f3a2332b051739c0ded535d6);
+            
+    
+            var circle_marker_951a8212a2f459e8bdaa6dd064a0aa08 = L.circleMarker(
+                [35.0394, 135.7292],
+                {"bubblingMouseEvents": true, "color": "#4ECDC4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4ECDC4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var marker_4c49be20d987f06378a9092abbfb42d6 = L.marker(
+                [35.0094, 135.6667],
+                {
+}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var icon_fa878b78dfddb018fc4396e1b60264be = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ef56c0982cc972147a782838de2b5af6 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_777e0e2ec7ad2de6ea7a9abbed693dc1 = $(`<div id="html_777e0e2ec7ad2de6ea7a9abbed693dc1" style="width: 100.0%; height: 100.0%;"><b>嵐山</b></div>`)[0];
+                popup_ef56c0982cc972147a782838de2b5af6.setContent(html_777e0e2ec7ad2de6ea7a9abbed693dc1);
+            
+        
+
+        marker_4c49be20d987f06378a9092abbfb42d6.bindPopup(popup_ef56c0982cc972147a782838de2b5af6)
+        ;
+
+        
+    
+    
+            marker_4c49be20d987f06378a9092abbfb42d6.bindTooltip(
+                `<div>
+                     嵐山
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4c49be20d987f06378a9092abbfb42d6.setIcon(icon_fa878b78dfddb018fc4396e1b60264be);
+            
+    
+            var circle_marker_fe8900c8dd123c9f2c9765710e3a315c = L.circleMarker(
+                [35.0094, 135.6667],
+                {"bubblingMouseEvents": true, "color": "#45B7D1", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#45B7D1", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var marker_c827db5d22719f7fe9252d7d109cd9e0 = L.marker(
+                [35.0037, 135.7788],
+                {
+}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var icon_d88b6f415845fabb6b9d7e9f52eb7a83 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ad0acb0cb0dc986756534da0a3d5fcd9 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_f1d9010b6830ba3e492f4ff02d831296 = $(`<div id="html_f1d9010b6830ba3e492f4ff02d831296" style="width: 100.0%; height: 100.0%;"><b>祇園</b></div>`)[0];
+                popup_ad0acb0cb0dc986756534da0a3d5fcd9.setContent(html_f1d9010b6830ba3e492f4ff02d831296);
+            
+        
+
+        marker_c827db5d22719f7fe9252d7d109cd9e0.bindPopup(popup_ad0acb0cb0dc986756534da0a3d5fcd9)
+        ;
+
+        
+    
+    
+            marker_c827db5d22719f7fe9252d7d109cd9e0.bindTooltip(
+                `<div>
+                     祇園
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c827db5d22719f7fe9252d7d109cd9e0.setIcon(icon_d88b6f415845fabb6b9d7e9f52eb7a83);
+            
+    
+            var circle_marker_180c58c18c574a7b02e38f06d6b77c19 = L.circleMarker(
+                [35.0037, 135.7788],
+                {"bubblingMouseEvents": true, "color": "#FFA07A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA07A", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var marker_c1566859046d5e48eb24e41063a89458 = L.marker(
+                [34.9858, 135.7588],
+                {
+}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+    
+            var icon_2137c7610bcdb7a67786f799497ead81 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d0609371b718136870b0b165e6e533bf = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_ab73af937c032df1b47783b4fa3849cb = $(`<div id="html_ab73af937c032df1b47783b4fa3849cb" style="width: 100.0%; height: 100.0%;"><b>京都駅</b></div>`)[0];
+                popup_d0609371b718136870b0b165e6e533bf.setContent(html_ab73af937c032df1b47783b4fa3849cb);
+            
+        
+
+        marker_c1566859046d5e48eb24e41063a89458.bindPopup(popup_d0609371b718136870b0b165e6e533bf)
+        ;
+
+        
+    
+    
+            marker_c1566859046d5e48eb24e41063a89458.bindTooltip(
+                `<div>
+                     京都駅
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c1566859046d5e48eb24e41063a89458.setIcon(icon_2137c7610bcdb7a67786f799497ead81);
+            
+    
+            var circle_marker_a257a32473a3fa9d53b66e43759b7940 = L.circleMarker(
+                [34.9858, 135.7588],
+                {"bubblingMouseEvents": true, "color": "#98D8C8", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#98D8C8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_91a1ee76bd8ae17ace8c96a4955d958e);
+        
+</script>
+</html>

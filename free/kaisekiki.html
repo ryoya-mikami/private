@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解析木作成課題</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Yu Gothic', 'Meiryo', sans-serif;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+            background: #f5f5f5;
+            line-height: 1.8;
+        }
+
+        .page {
+            background: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            padding-left: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+
+        .grammar {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tree-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .tree {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .derivation {
+            background: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .derivation-step {
+            margin: 8px 0;
+        }
+
+        .arrow {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .explanation {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 4px solid #f39c12;
+            margin: 15px 0;
+        }
+
+        svg {
+            display: block;
+            margin: 20px auto;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                page-break-after: always;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <h1>文脈自由文法の解析木</h1>
+
+        <h2>問題1</h2>
+        <div class="grammar">
+            <strong>文法:</strong> S → 0 S 1 | 0 1<br>
+            <strong>記号列:</strong> 000111
+        </div>
+
+        <h3>導出過程</h3>
+        <div class="derivation">
+            <div class="derivation-step">S</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> 0 S 1 (規則 S → 0 S 1 を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> 0 0 S 1 1 (規則 S → 0 S 1 を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> 0 0 0 1 1 1 (規則 S → 0 1 を適用)</div>
+        </div>
+
+        <h3>解析木</h3>
+        <div class="tree-container">
+            <svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+                <!-- Level 0 -->
+                <text x="300" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+
+                <!-- Level 1 -->
+                <line x1="300" y1="40" x2="200" y2="90" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="40" x2="300" y2="90" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="40" x2="400" y2="90" stroke="#3498db" stroke-width="2" />
+
+                <text x="200" y="110" text-anchor="middle" font-size="18" fill="#2c3e50">0</text>
+                <text x="300" y="110" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+                <text x="400" y="110" text-anchor="middle" font-size="18" fill="#2c3e50">1</text>
+
+                <!-- Level 2 -->
+                <line x1="300" y1="120" x2="220" y2="170" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="120" x2="300" y2="170" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="120" x2="380" y2="170" stroke="#3498db" stroke-width="2" />
+
+                <text x="220" y="190" text-anchor="middle" font-size="18" fill="#2c3e50">0</text>
+                <text x="300" y="190" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+                <text x="380" y="190" text-anchor="middle" font-size="18" fill="#2c3e50">1</text>
+
+                <!-- Level 3 -->
+                <line x1="300" y1="200" x2="260" y2="250" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="200" x2="340" y2="250" stroke="#3498db" stroke-width="2" />
+
+                <text x="260" y="270" text-anchor="middle" font-size="18" fill="#2c3e50">0</text>
+                <text x="340" y="270" text-anchor="middle" font-size="18" fill="#2c3e50">1</text>
+
+                <!-- Leaves (terminal symbols) -->
+                <circle cx="200" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+                <circle cx="220" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+                <circle cx="260" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+                <circle cx="340" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+                <circle cx="380" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+                <circle cx="400" cy="320" r="25" fill="#e74c3c" opacity="0.2" />
+
+                <text x="200" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">0</text>
+                <text x="220" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">0</text>
+                <text x="260" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">0</text>
+                <text x="340" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">1</text>
+                <text x="380" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">1</text>
+                <text x="400" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">1</text>
+            </svg>
+        </div>
+
+        <div class="explanation">
+            <strong>説明:</strong><br>
+            この文法は、0と1が対称的に並ぶ文字列（0<sup>n</sup>1<sup>n</sup>の形式）を生成します。
+            記号列 000111 は、n=3の場合に相当し、規則 S → 0 S 1 を2回適用した後、
+            S → 0 1 を適用することで導出されます。
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>問題2</h2>
+        <div class="grammar">
+            <strong>文法:</strong> S → + S S | * S S | a<br>
+            <strong>記号列:</strong> +*aaa
+        </div>
+
+        <h3>導出過程</h3>
+        <div class="derivation">
+            <div class="derivation-step">S</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> + S S (規則 S → + S S を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> + (* S S) S (左側の S に規則 S → * S S を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> + (* a S) S (規則 S → a を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> + (* a a) S (規則 S → a を適用)</div>
+            <div class="derivation-step"><span class="arrow">⇒</span> + * a a a (規則 S → a を適用)</div>
+        </div>
+
+        <h3>解析木</h3>
+        <div class="tree-container">
+            <svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+                <!-- Level 0 - Root -->
+                <text x="300" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+
+                <!-- Level 1 -->
+                <line x1="300" y1="40" x2="220" y2="90" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="40" x2="300" y2="90" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="40" x2="380" y2="90" stroke="#3498db" stroke-width="2" />
+
+                <text x="220" y="110" text-anchor="middle" font-size="18" fill="#2c3e50">+</text>
+                <text x="300" y="110" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+                <text x="380" y="110" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+
+                <!-- Level 2 - Left S expands to * S S -->
+                <line x1="300" y1="120" x2="240" y2="170" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="120" x2="300" y2="170" stroke="#3498db" stroke-width="2" />
+                <line x1="300" y1="120" x2="360" y2="170" stroke="#3498db" stroke-width="2" />
+
+                <text x="240" y="190" text-anchor="middle" font-size="18" fill="#2c3e50">*</text>
+                <text x="300" y="190" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+                <text x="360" y="190" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">S</text>
+
+                <!-- Level 3 - Both S under * become a -->
+                <line x1="300" y1="200" x2="300" y2="250" stroke="#3498db" stroke-width="2" />
+                <line x1="360" y1="200" x2="360" y2="250" stroke="#3498db" stroke-width="2" />
+                <line x1="380" y1="120" x2="380" y2="250" stroke="#3498db" stroke-width="2" />
+
+                <text x="300" y="270" text-anchor="middle" font-size="18" fill="#2c3e50">a</text>
+                <text x="360" y="270" text-anchor="middle" font-size="18" fill="#2c3e50">a</text>
+                <text x="380" y="270" text-anchor="middle" font-size="18" fill="#2c3e50">a</text>
+
+                <!-- Terminal symbols highlighting -->
+                <circle cx="220" cy="300" r="20" fill="#e74c3c" opacity="0.2" />
+                <circle cx="240" cy="300" r="20" fill="#e74c3c" opacity="0.2" />
+                <circle cx="300" cy="300" r="20" fill="#e74c3c" opacity="0.2" />
+                <circle cx="360" cy="300" r="20" fill="#e74c3c" opacity="0.2" />
+                <circle cx="380" cy="300" r="20" fill="#e74c3c" opacity="0.2" />
+
+                <text x="220" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">+</text>
+                <text x="240" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">*</text>
+                <text x="300" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">a</text>
+                <text x="360" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">a</text>
+                <text x="380" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">a</text>
+            </svg>
+        </div>
+
+        <div class="explanation">
+            <strong>説明:</strong><br>
+            この文法は、前置記法（Polish notation）で表現された算術式を生成します。
+            記号列 +*aaa は、数式 +(*(a, a), a) すなわち (a * a) + a を前置記法で表現したものです。
+            演算子（+ と *）が先に現れ、その後にオペランドが続く構造になっています。
+        </div>
+
+        <h3>まとめ</h3>
+        <div class="explanation" style="border-left-color: #27ae60; background: #eafaf1;">
+            <strong>両問題の特徴:</strong><br>
+            <ul>
+                <li><strong>問題1:</strong> 再帰的な構造により、対称的な文字列を生成</li>
+                <li><strong>問題2:</strong> 前置記法の算術式を表現する木構造</li>
+                <li>どちらも文脈自由文法（Context-Free Grammar）の解析木として正しく導出されています</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
