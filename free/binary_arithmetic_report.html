@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二進数演算課題レポート</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 5px solid #764ba2;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .intro h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .problem {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            page-break-inside: avoid;
+        }
+
+        .problem-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .problem-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: 700;
+        }
+
+        .calculation {
+            font-family: 'Roboto Mono', monospace;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .binary-table {
+            margin: 15px 0;
+        }
+
+        .binary-row {
+            display: grid;
+            grid-template-columns: auto repeat(8, 1fr);
+            gap: 8px;
+            margin: 5px 0;
+            align-items: center;
+        }
+
+        .binary-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #495057;
+            padding-right: 10px;
+            min-width: 80px;
+        }
+
+        .bit {
+            background: #e7e9fc;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 15px;
+            border: 1px solid #d0d5f6;
+        }
+
+        .bit.carry {
+            background: #fff3cd;
+            color: #856404;
+            font-size: 12px;
+            border-color: #ffeaa7;
+        }
+
+        .bit.result {
+            background: #d4edda;
+            color: #155724;
+            font-weight: 700;
+            border-color: #c3e6cb;
+        }
+
+        .bit.overflow {
+            background: #f8d7da;
+            color: #721c24;
+            font-weight: 700;
+            border-color: #f5c6cb;
+        }
+
+        .divider {
+            border-top: 2px solid #343a40;
+            margin: 8px 0;
+            grid-column: 1 / -1;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .result-box.overflow-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .explanation {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .explanation p {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .multiplication-table {
+            font-family: 'Roboto Mono', monospace;
+            margin: 15px 0;
+        }
+
+        .mult-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        .mult-label {
+            min-width: 120px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .mult-value {
+            background: #e7e9fc;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #d0d5f6;
+        }
+
+        .mult-partial {
+            background: #fff3cd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #ffeaa7;
+            margin-left: 80px;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .summary h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .summary ul {
+            margin-left: 20px;
+        }
+
+        .summary li {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .note {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: #f57c00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>二進数演算課題レポート</h1>
+
+        <div class="intro">
+            <h3>課題概要</h3>
+            <p><strong>形式：</strong>8ビット符号付き（2の補数形式）</p>
+            <p><strong>範囲：</strong>-128 ～ 127</p>
+            <p><strong>目的：</strong>二進数演算の過程と結果を示し、オーバーフローの有無を確認する</p>
+        </div>
+
+        <!-- 問題1 -->
+        <div class="problem">
+            <div class="problem-title">
+                <span class="problem-number">1</span>
+                52₁₀ + 38₁₀ (00110100₂ + 00100110₂)
+            </div>
+
+            <div class="calculation">
+                <div class="binary-table">
+                    <div class="binary-row">
+                        <span class="binary-label">キャリー</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">52₁₀</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">+ 38₁₀</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="binary-row">
+                        <span class="binary-label">= 90₁₀</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box">
+                ✓ 結果: 01011010₂ = 90₁₀ （オーバーフローなし）
+            </div>
+
+            <div class="explanation">
+                <p><strong>解説：</strong>両方の数値が正の数であり、結果も正の数（最上位ビットが0）で、8ビット符号付き整数の範囲内（-128～127）に収まっているため、オーバーフローは発生していません。
+                </p>
+            </div>
+        </div>
+
+        <!-- 問題2 -->
+        <div class="problem">
+            <div class="problem-title">
+                <span class="problem-number">2</span>
+                -45₁₀ + 75₁₀ (11010011₂ + 01001011₂)
+            </div>
+
+            <div class="note">
+                <strong>2の補数表現：</strong>-45₁₀の2進数表現を求める手順<br>
+                ① 45₁₀ = 00101101₂<br>
+                ② ビット反転: 11010010₂<br>
+                ③ 1を加算: 11010011₂
+            </div>
+
+            <div class="calculation">
+                <div class="binary-table">
+                    <div class="binary-row">
+                        <span class="binary-label">キャリー</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">0</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">-45₁₀</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">+ 75₁₀</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="binary-row">
+                        <span class="binary-label">= 30₁₀</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box">
+                ✓ 結果: 00011110₂ = 30₁₀ （オーバーフローなし）
+            </div>
+
+            <div class="explanation">
+                <p><strong>解説：</strong>負の数と正の数の加算では、キャリーが最上位ビットから出ていますが、これは正常な動作です。結果の最上位ビットが0（正の数）であり、実際の計算結果30は範囲内に収まっているため、オーバーフローは発生していません。
+                </p>
+            </div>
+        </div>
+
+        <!-- 問題3 -->
+        <div class="problem">
+            <div class="problem-title">
+                <span class="problem-number">3</span>
+                -60₁₀ + (-70₁₀) (11000100₂ + 10111010₂)
+            </div>
+
+            <div class="note">
+                <strong>2の補数表現：</strong><br>
+                -60₁₀: 60 = 00111100₂ → 反転 11000011₂ → +1 = 11000100₂<br>
+                -70₁₀: 70 = 01000110₂ → 反転 10111001₂ → +1 = 10111010₂
+            </div>
+
+            <div class="calculation">
+                <div class="binary-table">
+                    <div class="binary-row">
+                        <span class="binary-label">キャリー</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">0</span>
+                        <span class="bit carry">1</span>
+                        <span class="bit carry">1</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">-60₁₀</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                    </div>
+                    <div class="binary-row">
+                        <span class="binary-label">+ (-70₁₀)</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="binary-row">
+                        <span class="binary-label">ビット結果</span>
+                        <span class="bit overflow">0</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">1</span>
+                        <span class="bit overflow">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box overflow-warning">
+                ⚠ オーバーフロー発生！<br>
+                実際の結果: -130₁₀（範囲外：8ビット符号付きは-128～127）<br>
+                ビット結果: 01111110₂ = 126₁₀（誤った値）
+            </div>
+
+            <div class="explanation">
+                <p><strong>解説：</strong>2つの負の数を加算した結果、正の数（最上位ビットが0）になってしまいました。これは典型的なオーバーフローです。実際の計算結果は-130ですが、8ビット符号付き整数では-128が最小値のため、範囲外となります。
+                </p>
+                <p><strong>オーバーフロー検出：</strong>両方の被加数が負（最上位ビット=1）なのに、結果が正（最上位ビット=0）になっているため、オーバーフローと判定できます。</p>
+            </div>
+        </div>
+
+        <!-- 問題4 -->
+        <div class="problem">
+            <div class="problem-title">
+                <span class="problem-number">4</span>
+                6₁₀ × 9₁₀ (00000110₂ × 00001001₂)
+            </div>
+
+            <div class="calculation">
+                <div class="multiplication-table">
+                    <div class="mult-row">
+                        <span class="mult-label">被乗数</span>
+                        <span class="mult-value">00000110 (6)</span>
+                    </div>
+                    <div class="mult-row">
+                        <span class="mult-label">乗数</span>
+                        <span class="mult-value">× 00001001 (9)</span>
+                    </div>
+                    <div style="border-top: 2px solid #343a40; margin: 10px 0;"></div>
+                    <div class="mult-row">
+                        <span class="mult-label">部分積 (×1)</span>
+                        <span class="mult-partial">00000110</span>
+                    </div>
+                    <div class="mult-row">
+                        <span class="mult-label">部分積 (×0)</span>
+                        <span class="mult-partial">00000000</span>
+                    </div>
+                    <div class="mult-row">
+                        <span class="mult-label">部分積 (×0)</span>
+                        <span class="mult-partial">00000000</span>
+                    </div>
+                    <div class="mult-row">
+                        <span class="mult-label">部分積 (×1)</span>
+                        <span class="mult-partial">00000110</span>
+                    </div>
+                    <div style="border-top: 2px solid #343a40; margin: 10px 0;"></div>
+                </div>
+
+                <div class="binary-table">
+                    <div class="binary-row">
+                        <span class="binary-label">= 54₁₀</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">1</span>
+                        <span class="bit result">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box">
+                ✓ 結果: 00110110₂ = 54₁₀ （オーバーフローなし）
+            </div>
+
+            <div class="explanation">
+                <p><strong>解説：</strong>2進数の乗算は、10進数の筆算と同様に部分積を求めて加算します。乗数の各ビットについて、1なら被乗数をそのまま、0なら0を部分積とし、それらをビット位置に応じてシフトして加算します。
+                </p>
+                <p><strong>計算過程：</strong>9₁₀ = 1001₂なので、右から1番目と4番目のビットが1です。したがって、6×1 = 6と6×8 = 48を加算して、6 + 48 =
+                    54となります。結果は8ビット符号付き整数の範囲内に収まっています。</p>
+            </div>
+        </div>
+
+        <!-- まとめ -->
+        <div class="summary">
+            <h3>演算結果のまとめ</h3>
+            <ul>
+                <li><strong>問題1:</strong> 52 + 38 = 90 （オーバーフローなし）</li>
+                <li><strong>問題2:</strong> -45 + 75 = 30 （オーバーフローなし）</li>
+                <li><strong>問題3:</strong> -60 + (-70) = -130 <strong style="color: #f5576c;">（オーバーフロー発生）</strong></li>
+                <li><strong>問題4:</strong> 6 × 9 = 54 （オーバーフローなし）</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">8ビット符号付き整数の特性</h3>
+            <ul>
+                <li><strong>表現範囲：</strong>-128 ～ 127</li>
+                <li><strong>2の補数形式：</strong>負の数は元の数のビット反転+1で表現</li>
+                <li><strong>オーバーフロー検出：</strong>同符号の数を加算して異符号になった場合に発生</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

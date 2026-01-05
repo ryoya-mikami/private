@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第11回 コンピュータサイエンス課題レポート</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --code-bg: #f1f5f9;
+            --border-color: #e2e8f0;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-top: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 40px 0 20px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+
+        .problem-box {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #bae6fd;
+        }
+
+        .calculation-step {
+            margin-left: 20px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-highlight {
+            font-weight: 700;
+            color: #1d4ed8;
+            background-color: #dbeafe;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+        }
+
+        .caption {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>第11回 課題レポート</h1>
+            <p class="subtitle">基礎プログラミング：数値表現と計算精度</p>
+        </header>
+
+        <section id="task1">
+            <h2>課題 (1) 整数の演算 (16-bit half)</h2>
+            <div class="problem-box">
+                整数の演算を16ビット(half)の数値として行いなさい。計算結果が16ビットを超える場合は下位16ビットのみを保持するものとする。
+            </div>
+
+            <h3>(a) 0x356F + 0x6212</h3>
+            <div class="calculation-step">
+                <p>1. 10進数に変換: 13679 + 25106 = 38785</p>
+                <p>2. 16進数に戻す: 38785 -> <code>0x9781</code></p>
+                <p>3. 16ビット範囲内 (0xFFFF以下) であることを確認。</p>
+                <p>結果: <span class="result-highlight">0x9781</span></p>
+            </div>
+
+            <h3>(b) 0x5863 - 0x8457</h3>
+            <div class="calculation-step">
+                <p>1. 10進数で計算: 22627 - 33879 = -11252</p>
+                <p>2. 負の数を16ビット範囲で表す (2の補数表現相当、下位16ビット保持):</p>
+                <p><code>-11252 & 0xFFFF</code> = <code>54284</code></p>
+                <p>3. 16進数に変換: 54284 -> <code>0xD40C</code></p>
+                <p>結果: <span class="result-highlight">0xD40C</span></p>
+            </div>
+
+            <h3>(c) 0x0025 * 0x0012</h3>
+            <div class="calculation-step">
+                <p>1. 10進数で計算: 37 * 18 = 666</p>
+                <p>2. 16進数に変換: 666 -> <code>0x029A</code></p>
+                <p>結果: <span class="result-highlight">0x029A</span></p>
+            </div>
+        </section>
+
+        <section id="task2">
+            <h2>課題 (2) 浮動小数点数変換</h2>
+            <div class="problem-box">
+                IEEE 754 単精度バイナリ形式の相互変換。
+            </div>
+
+            <h3>(a) 2.75 を IEEE 754 単精度形式に変換</h3>
+            <div class="calculation-step">
+                <p>1. 符号: 正なので <code>0</code> (1bit)</p>
+                <p>2. 2進数変換: 2.75 = 10.11<sub>(2)</sub> = 1.011 * 2<sup>1</sup></p>
+                <p>3. 指数部: 1 + 127 = 128 -> <code>10000000</code><sub>(2)</sub> (8bit)</p>
+                <p>4. 仮数部: 1.011の「011」以降を0で埋める -> <code>011000...</code> (23bit)</p>
+                <p>5. 連結: <code>0 10000000 01100000000000000000000</code></p>
+                <p>6. 16進数変換: <code>0100 0000 0011 0000 ...</code> -> <code>0x40300000</code></p>
+                <p>結果: <span class="result-highlight">0x40300000</span></p>
+            </div>
+
+            <h3>(b) 0xC1280000 を浮動小数点数に変換</h3>
+            <div class="calculation-step">
+                <p>1. 2進数展開: <code>1100 0001 0010 1000 ...</code></p>
+                <p>2. 各フィールドの抽出:</p>
+                <ul>
+                    <li>符号ビット: <code>1</code> (負)</li>
+                    <li>指数部: <code>10000010</code><sub>(2)</sub> = 130. 実際の指数 = 130 - 127 = 3</li>
+                    <li>仮数部: <code>0101000...</code><sub>(2)</sub> = 1.0101<sub>(2)</sub> = 1 + 0.25 + 0.0625 = 1.3125
+                    </li>
+                </ul>
+                <p>3. 計算: -1 * 1.3125 * 2<sup>3</sup> = -1 * 1.3125 * 8 = -10.5</p>
+                <p>結果: <span class="result-highlight">-10.5</span></p>
+            </div>
+        </section>
+
+        <section id="task3" class="page-break">
+            <h2>課題 (3) 2次方程式と桁落ち</h2>
+            <div class="problem-box">
+                条件: $a = 1, b = 10^{10}, c = 1$ の時の解の精度。
+            </div>
+
+            <h3>計算結果</h3>
+            <table>
+                <tr>
+                    <th>計算方法</th>
+                    <th>x1</th>
+                    <th>x2</th>
+                </tr>
+                <tr>
+                    <td>公式 (1)</td>
+                    <td>0.0 (精度低下)</td>
+                    <td>-10,000,000,000.0</td>
+                </tr>
+                <tr>
+                    <td>公式 (2) [改良版]</td>
+                    <td>-10,000,000,000.0</td>
+                    <td>-1.0e-10 (高精度)</td>
+                </tr>
+            </table>
+
+            <h3>精度低下（桁落ち）の理由</h3>
+            <p>
+                公式(1)において、解 $x_1$ を求める際の分子の計算 <code>-b + sqrt(b^2 - 4ac)</code> に注目します。
+                本課題では $b = 10^{10}$ と非常に大きいため、$b^2 = 10^{20}$ となり、$4ac = 4$ はこれに対して相対的に極めて小さい値です。
+            </p>
+            <p>
+                浮動小数点数の計算では、<code>b^2 - 4ac</code> の結果はほぼ <code>b^2</code> と等しくなり、その平方根 <code>sqrt(b^2 - 4ac)</code> も
+                <code>b</code> に限りなく近い値になります。
+                この結果、<code>-b + (bに極めて近い値)</code>
+                という<b>「ほぼ等しい二つの数値の引き算」</b>が発生します。これによって有効数字が大幅に失われる現象を<b>「桁落ち（catastrophic cancellation）」</b>と呼びます。
+            </p>
+            <p>
+                Pythonの標準的な float（64bit）でも、この桁落ちによって $x_1$ の分子が 0 と判定されてしまい、本来非常に小さな値（$1/10^{10}$ 程度）になるはずの解が 0
+                になってしまいます。一方、公式(2)ではこの引き算を回避するように変形されているため、正しい解を得ることができます。
+            </p>
+        </section>
+
+        <footer style="margin-top: 60px; text-align: center; color: var(--secondary-color); font-size: 0.8rem;">
+            &copy; 2025 課題提出用レポート
+        </footer>
+    </div>
+</body>
+
+</html>
