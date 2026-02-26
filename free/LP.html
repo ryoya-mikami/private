@@ -3,179 +3,516 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>給料計算</title>
+    <meta name="apple-mobile-web-app-title" content="給料計算">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>給料計算 | Premium Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-color: #ffc107;
+            --success-color: #00e676;
+            --danger-color: #ff4d4d;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: sans-serif;
-            padding: 20px;
-            max-width: 480px;
-            margin: auto;
+            font-family: 'Outfit', sans-serif;
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: var(--text-main);
+        }
+
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats-info span {
+            display: block;
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stats-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            background: linear-gradient(to bottom, #fff, #ccc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 職種切替ボタン */
+        .job-selector {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            border-radius: 16px;
+            margin-bottom: 25px;
         }
 
         .job-btn {
-            width: 48%;
-            padding: 15px;
-            margin: 2px;
-            font-size: 20px;
-            text-align: center;
-            border-radius: 8px;
+            flex: 1;
+            padding: 12px;
             border: none;
-            color: white;
-        }
-
-        .settei {
-            background: #007bff;
-        }
-
-        .annai {
-            background: #28a745;
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .job-btn.active {
-            border: 3px solid #000;
+            background: white;
+            color: #764ba2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .box {
-            margin-top: 20px;
+        /* 入力セクション */
+        .input-group {
+            margin-bottom: 20px;
         }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            margin-top: 5px;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 26px;
-            font-weight: bold;
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dim);
+            margin-left: 5px;
         }
 
         .time-box {
             display: flex;
+            gap: 12px;
             align-items: center;
-            gap: 10px;
+        }
+
+        input[type="time"] {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 18px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="time"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
         }
 
         .now-btn {
-            padding: 10px;
-            font-size: 16px;
-            background: #ffc107;
+            padding: 12px 18px;
+            background: var(--accent-color);
             border: none;
-            border-radius: 5px;
+            border-radius: 14px;
+            color: #000;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
+            transition: all 0.3s;
             white-space: nowrap;
         }
 
+        .now-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* アクショングループ */
+        .action-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
         .reset-btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 20px;
-            background: #dc3545;
-            color: white;
+            flex: 1;
+            padding: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 77, 77, 0.2);
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .save-btn {
+            flex: 2;
+            padding: 16px;
+            background: var(--success-color);
             border: none;
-            border-radius: 8px;
+            border-radius: 18px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
+        }
+
+        .save-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 結果表示 */
+        #result-container {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+
+        #result {
+            font-size: 40px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #result span {
+            font-size: 20px;
+            margin-left: 5px;
+            font-weight: 400;
+            color: var(--text-dim);
+        }
+
+        /* 履歴セクション */
+        .history-section {
+            width: 100%;
+            max-width: 420px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .history-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .clear-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .history-list {
+            list-style: none;
+            max-height: 350px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--glass-border) transparent;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .history-item:hover {
+            border-color: var(--glass-border);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .history-date {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        .history-job {
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .history-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .del-item-btn {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            margin-left: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .del-item-btn:hover {
+            opacity: 1;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h2>給料計算</h2>
+    <div class="container">
+        <div class="stats-card">
+            <div class="stats-info">
+                <span>今月の合計収入</span>
+                <div class="stats-value" id="monthly-total">0 円</div>
+            </div>
+            <div class="stats-info" style="text-align: right;">
+                <span>シフト数</span>
+                <div class="stats-value" id="shift-count">0</div>
+            </div>
+        </div>
 
-    <!-- 職種切替ボタン（機能8） -->
-    <div>
-        <button class="job-btn settei active" id="btn_settei">設撤</button>
-        <button class="job-btn annai" id="btn_annai">案内</button>
-    </div>
+        <h2>給料計算</h2>
 
-    <div class="box">
-        <label>開始時刻</label>
-        <div class="time-box">
-            <input type="time" id="start">
-            <button class="now-btn" id="btn_start_now">現在</button>
+        <div class="job-selector">
+            <button class="job-btn active" id="btn_settei">設撤</button>
+            <button class="job-btn" id="btn_annai">案内</button>
+        </div>
+
+        <div class="input-group">
+            <label>開始時刻</label>
+            <div class="time-box">
+                <input type="time" id="start">
+                <button class="now-btn" id="btn_start_now">現在</button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>終了時刻</label>
+            <div class="time-box">
+                <input type="time" id="end">
+                <button class="now-btn" id="btn_end_now">現在</button>
+            </div>
+        </div>
+
+        <div class="action-group">
+            <button class="reset-btn" id="btn_reset">クリア</button>
+            <button class="save-btn" id="btn_save">履歴に保存</button>
+        </div>
+
+        <div id="result-container">
+            <div class="result-label">概算給料</div>
+            <div id="result">0 <span>円</span></div>
         </div>
     </div>
 
-    <div class="box">
-        <label>終了時刻</label>
-        <div class="time-box">
-            <input type="time" id="end">
-            <button class="now-btn" id="btn_end_now">現在</button>
+    <div class="history-section">
+        <div class="history-header">
+            <h3>勤務履歴</h3>
+            <button class="clear-btn" id="btn_clear_all">全消去</button>
         </div>
+        <ul class="history-list" id="history-list">
+            <!-- 履歴アイテム -->
+        </ul>
     </div>
-
-    <button class="reset-btn" id="btn_reset">リセット</button>
-
-    <div id="result">給料：0 円</div>
 
     <script>
-        // 選択された職種
+        // --- 状態管理 ---
         let jobType = "設撤";
+        let historyData = JSON.parse(localStorage.getItem('salaryHistory') || '[]');
+        let currentCalculatedTotal = 0;
 
-        // ボタン切替
-        document.getElementById("btn_settei").onclick = () => {
-            jobType = "設撤";
-            updateButtons();
+        // --- DOM要素 ---
+        const btnSettei = document.getElementById("btn_settei");
+        const btnAnnai = document.getElementById("btn_annai");
+        const inputStart = document.getElementById("start");
+        const inputEnd = document.getElementById("end");
+        const resultDisplay = document.getElementById("result");
+        const histContainer = document.getElementById("history-list");
+        const monthlyDisplay = document.getElementById("monthly-total");
+        const countDisplay = document.getElementById("shift-count");
+
+        // --- 初期化 ---
+        updateUI();
+        renderHistory();
+
+        // --- イベントリスナー ---
+        btnSettei.onclick = () => { jobType = "設撤"; updateUI(); };
+        btnAnnai.onclick = () => { jobType = "案内"; updateUI(); };
+
+        inputStart.addEventListener("input", calcSalary);
+        inputEnd.addEventListener("input", calcSalary);
+
+        document.getElementById("btn_start_now").onclick = () => setNow("start");
+        document.getElementById("btn_end_now").onclick = () => setNow("end");
+
+        document.getElementById("btn_reset").onclick = () => {
+            inputStart.value = "";
+            inputEnd.value = "";
             calcSalary();
         };
-        document.getElementById("btn_annai").onclick = () => {
-            jobType = "案内";
-            updateButtons();
+
+        document.getElementById("btn_save").onclick = saveToHistory;
+        document.getElementById("btn_clear_all").onclick = clearAllHistory;
+
+        // --- 関数 ---
+        function updateUI() {
+            btnSettei.classList.toggle("active", jobType === "設撤");
+            btnAnnai.classList.toggle("active", jobType === "案内");
             calcSalary();
-        };
-
-        // ボタンの見た目更新
-        function updateButtons() {
-            document.getElementById("btn_settei").classList.remove("active");
-            document.getElementById("btn_annai").classList.remove("active");
-
-            if (jobType === "設撤") {
-                document.getElementById("btn_settei").classList.add("active");
-            } else {
-                document.getElementById("btn_annai").classList.add("active");
-            }
         }
 
-        // 時間入力で自動計算（機能2・3）
-        document.getElementById("start").addEventListener("input", calcSalary);
-        document.getElementById("end").addEventListener("input", calcSalary);
-
-        // 現在時刻セット
-        const setNow = (id) => {
+        function setNow(id) {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             document.getElementById(id).value = `${h}:${m}`;
             calcSalary();
-        };
+        }
 
-        document.getElementById("btn_start_now").onclick = () => setNow("start");
-        document.getElementById("btn_end_now").onclick = () => setNow("end");
-
-        // リセット
-        document.getElementById("btn_reset").onclick = () => {
-            document.getElementById("start").value = "";
-            document.getElementById("end").value = "";
-            document.getElementById("result").innerText = "給料：0 円";
-        };
-
-
-        // 深夜区間（22:00〜翌5:00）を計算
         function calcNightHours(start, end) {
             let nightStart = 22;
-            let nightEnd = 29; // 翌5時 → 24 + 5 = 29 として計算
-
+            let nightEnd = 29;
             let s = start;
-            let e = end < start ? end + 24 : end; // 翌日扱い
-
+            let e = end < start ? end + 24 : end;
             let nightHours = 0;
-
             if (e > nightStart && s < nightEnd) {
                 let ns = Math.max(s, nightStart);
                 let ne = Math.min(e, nightEnd);
@@ -184,28 +521,25 @@
             return nightHours;
         }
 
-
-        // メイン給料計算
         function calcSalary() {
-            const startValue = document.getElementById("start").value;
-            const endValue = document.getElementById("end").value;
+            const startValue = inputStart.value;
+            const endValue = inputEnd.value;
 
-            if (!startValue || !endValue) return;
+            if (!startValue || !endValue) {
+                resultDisplay.innerHTML = "0 <span>円</span>";
+                currentCalculatedTotal = 0;
+                return;
+            }
 
-            // 時刻→小数時間に変換
             let [sh, sm] = startValue.split(":").map(Number);
             let [eh, em] = endValue.split(":").map(Number);
-
             let startHour = sh + sm / 60;
             let endHour = eh + em / 60;
-
-            // 翌日対応
             if (endHour < startHour) endHour += 24;
 
             let totalHours = endHour - startHour;
-
-            // 職種ごとの設定
             let base, overtime, nightAdd;
+
             if (jobType === "設撤") {
                 base = 1350;
                 overtime = 1668;
@@ -216,28 +550,102 @@
                 nightAdd = 313;
             }
 
-            // 3時間以下 → 一律4050円
+            let salary = 0;
             if (totalHours <= 3) {
-                document.getElementById("result").innerText = "給料：4050 円";
+                salary = 4050; // 3時間以下一律
+            } else {
+                if (totalHours <= 8) {
+                    salary = totalHours * base;
+                } else {
+                    salary = 8 * base + (totalHours - 8) * overtime;
+                }
+                let nightHours = calcNightHours(startHour, endHour);
+                salary += nightHours * nightAdd;
+            }
+
+            currentCalculatedTotal = Math.floor(salary);
+            resultDisplay.innerHTML = `${currentCalculatedTotal.toLocaleString()} <span>円</span>`;
+        }
+
+        // --- 履歴・集計ロジック ---
+        function saveToHistory() {
+            if (currentCalculatedTotal === 0) {
+                alert("勤務時間を入力してください。");
                 return;
             }
 
-            // 8時間以内の基本給
-            let salary = 0;
-            if (totalHours <= 8) {
-                salary = totalHours * base;
+            const now = new Date();
+            const dateStr = `${now.getMonth() + 1}/${now.getDate()}`;
+            const timestamp = now.getTime();
+
+            const entry = {
+                id: timestamp,
+                date: dateStr,
+                month: now.getMonth() + 1,
+                year: now.getFullYear(),
+                job: jobType,
+                amount: currentCalculatedTotal,
+                time: `${inputStart.value}〜${inputEnd.value}`
+            };
+
+            historyData.unshift(entry);
+            localStorage.setItem('salaryHistory', JSON.stringify(historyData));
+
+            renderHistory();
+        }
+
+        function renderHistory() {
+            histContainer.innerHTML = "";
+
+            if (historyData.length === 0) {
+                histContainer.innerHTML = '<li class="empty-msg">履歴がありません</li>';
             } else {
-                salary = 8 * base + (totalHours - 8) * overtime;
+                historyData.forEach(item => {
+                    const li = document.createElement("li");
+                    li.className = "history-item";
+                    li.innerHTML = `
+                        <div>
+                            <div class="history-date">${item.date} (${item.time})</div>
+                            <div class="history-job">${item.job}</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div class="history-amount">¥${item.amount.toLocaleString()}</div>
+                            <button class="del-item-btn" onclick="deleteItem(${item.id})">×</button>
+                        </div>
+                    `;
+                    histContainer.appendChild(li);
+                });
             }
 
-            // 深夜時間（22:00〜翌5:00）
-            let nightHours = calcNightHours(startHour, endHour);
-            salary += nightHours * nightAdd;
+            updateMonthlyAggregation();
+        }
 
-            document.getElementById("result").innerText = `給料：${Math.floor(salary)} 円`;
+        function deleteItem(id) {
+            if (!confirm("この履歴を削除しますか？")) return;
+            historyData = historyData.filter(item => item.id !== id);
+            localStorage.setItem('salaryHistory', JSON.stringify(historyData));
+            renderHistory();
+        }
+
+        function clearAllHistory() {
+            if (!confirm("すべての履歴を消去しますか？")) return;
+            historyData = [];
+            localStorage.setItem('salaryHistory', JSON.stringify(historyData));
+            renderHistory();
+        }
+
+        function updateMonthlyAggregation() {
+            const now = new Date();
+            const curMonth = now.getMonth() + 1;
+            const curYear = now.getFullYear();
+
+            const monthEntries = historyData.filter(item => item.month === curMonth && item.year === curYear);
+            const total = monthEntries.reduce((sum, item) => sum + item.amount, 0);
+
+            monthlyDisplay.innerText = `${total.toLocaleString()} 円`;
+            countDisplay.innerText = monthEntries.length;
         }
     </script>
-
 </body>
 
 </html>

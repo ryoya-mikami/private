@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北海道観光地のボロノイ図</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-delaunay.v6.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .legend {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            max-width: 250px;
+        }
+
+        .legend h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .legend p {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #999;
+            border-radius: 3px;
+        }
+
+        .custom-popup {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .location-label {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 地図の初期化（北海道中心）
+        const map = L.map('map').setView([43.2, 142.0], 7);
+
+        // OpenStreetMapタイルレイヤー
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 観光地データ（実際の北海道の観光地名に変更）
+        const locations = [
+            { name: '札幌市', lat: 43.0642, lng: 141.3469, color: '#FF6B6B' },
+            { name: '小樽市', lat: 43.1907, lng: 140.9946, color: '#4ECDC4' },
+            { name: '函館市', lat: 41.7688, lng: 140.7289, color: '#45B7D1' },
+            { name: '富良野市', lat: 43.3417, lng: 142.3833, color: '#FFA07A' },
+            { name: '旭川市', lat: 43.7706, lng: 142.3650, color: '#98D8C8' }
+        ];
+
+        // 北海道の境界を大まかに定義
+        const bounds = {
+            north: 45.5,
+            south: 41.3,
+            east: 145.8,
+            west: 139.5
+        };
+
+        // ボロノイ図を計算して描画
+        function drawVoronoi() {
+            // 座標を配列に変換
+            const points = locations.map(loc => [loc.lng, loc.lat]);
+
+            // D3のDelaunayを使用してボロノイ図を計算
+            const delaunay = d3.Delaunay.from(points);
+            const voronoi = delaunay.voronoi([bounds.west, bounds.south, bounds.east, bounds.north]);
+
+            // 各セルを描画
+            locations.forEach((loc, i) => {
+                const cell = voronoi.cellPolygon(i);
+                if (cell) {
+                    // 座標を[lat, lng]形式に変換
+                    const latLngs = cell.map(point => [point[1], point[0]]);
+
+                    // ポリゴンを描画
+                    L.polygon(latLngs, {
+                        color: loc.color,
+                        fillColor: loc.color,
+                        fillOpacity: 0.3,
+                        weight: 2,
+                        opacity: 0.8
+                    }).addTo(map);
+                }
+            });
+        }
+
+        // ボロノイ図を描画
+        drawVoronoi();
+
+        // マーカーとラベルを追加
+        locations.forEach(loc => {
+            // ピンマーカー
+            const marker = L.marker([loc.lat, loc.lng], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background-color: #d32f2f; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30]
+                })
+            }).addTo(map);
+
+            // ポップアップ
+            marker.bindPopup(`<div class="custom-popup">${loc.name}</div>`);
+
+            // 常に表示されるラベル
+            L.marker([loc.lat, loc.lng], {
+                icon: L.divIcon({
+                    className: 'location-label-container',
+                    html: `<div class="location-label" style="border: 2px solid ${loc.color};">${loc.name}</div>`,
+                    iconSize: [0, 0],
+                    iconAnchor: [-15, -35]
+                })
+            }).addTo(map);
+        });
+
+        // 凡例を追加
+        const legend = L.control({ position: 'topright' });
+
+        legend.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = '<h4>北海道観光地のボロノイ図</h4>';
+            div.innerHTML += '<p>各色の領域は、その色の観光地が最も近いエリアを示します。</p>';
+
+            locations.forEach(loc => {
+                div.innerHTML += `
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: ${loc.color}; opacity: 0.6;"></div>
+                        <span>${loc.name}</span>
+                    </div>
+                `;
+            });
+
+            return div;
+        };
+
+        legend.addTo(map);
+    </script>
+</body>
+
+</html>

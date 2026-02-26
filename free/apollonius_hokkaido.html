@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北海道のアポロニウスの円</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .ratio-control {
+            grid-column: 1 / -1;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #cbd5e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #5568d3;
+            transform: scale(1.2);
+        }
+
+        .ratio-value {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        #map {
+            height: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .info-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-panel h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-panel p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🗺️ 北海道のアポロニウスの円</h1>
+        <p class="subtitle">2つの地点と距離比率を設定してアポロニウスの円を可視化</p>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>地点A 緯度</label>
+                <input type="number" id="latA" value="43.0642" step="0.0001">
+            </div>
+            <div class="control-group">
+                <label>地点A 経度</label>
+                <input type="number" id="lngA" value="141.3469" step="0.0001">
+            </div>
+            <div class="control-group">
+                <label>地点B 緯度</label>
+                <input type="number" id="latB" value="42.7694" step="0.0001">
+            </div>
+            <div class="control-group">
+                <label>地点B 経度</label>
+                <input type="number" id="lngB" value="141.6869" step="0.0001">
+            </div>
+            <div class="control-group ratio-control">
+                <label>距離比率 (地点Aからの距離 : 地点Bからの距離)</label>
+                <input type="range" id="ratio" min="0.1" max="3" step="0.1" value="1.5">
+                <div class="ratio-value">1 : <span id="ratioValue">1.5</span></div>
+            </div>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="info-panel">
+            <h3>📋 問題設定</h3>
+            <p>北海道では観光客が多く、物流拠点の最適配置は重要である。</p>
+            <p>特に、「札幌市」と「函館市」は年間を通じて多くの観光客が訪れる代表的な拠点であり、両者の街などの位置に物流拠点を置くと利便性が高まるかを検討したい。</p>
+            <p>例えば、観光客が多く訪れる代表的なケースが多いと仮定し、案内所を「洞爺湖町により近い位置」に定めるために、距離比を 札幌市：函館市 = 2：1と設定する。</p>
+            <p>この距離比を満たす位置はアポロニウスの円で表される。</p>
+            <p>その軌跡を用いて、現実の市街地と比較しながら案内所候補地を検討する。</p>
+
+            <h3 style="margin-top: 25px;">📐 アポロニウスの円とは？</h3>
+            <p>アポロニウスの円は、古代ギリシャの数学者アポロニウスによって研究された幾何学的図形で、2つの定点（地点AとB）からの距離の比が一定となる点の軌跡です。</p>
+            <p><strong>数学的定義:</strong> 点Pが地点Aからの距離をd<sub>A</sub>、地点Bからの距離をd<sub>B</sub>とするとき、d<sub>A</sub> :
+                d<sub>B</sub> = k : 1 (k ≠ 1) を満たす点Pの軌跡は円となります。k = 1の場合は垂直二等分線になります。</p>
+
+            <h3 style="margin-top: 25px;">🗺️ 北海道における具体的数値例</h3>
+            <div style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <p><strong>基準点の設定:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>地点A（札幌市）:</strong> 緯度 43.0642°N, 経度 141.3469°E<br>
+                        北海道の政治・経済の中心地、人口約197万人</li>
+                    <li><strong>地点B（函館市）:</strong> 緯度 42.7694°N, 経度 141.6869°E<br>
+                        道南の中核都市、人口約25万人</li>
+                    <li><strong>2点間の直線距離:</strong> 約148km</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>距離比率の具体例:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>比率 1:1.0</strong> → 垂直二等分線（両都市から等距離の地点）<br>
+                        例: 長万部町付近（札幌・函館から各約74km）</li>
+                    <li><strong>比率 1:1.5</strong> → 札幌寄りの円<br>
+                        円周上の例: 室蘭市付近（札幌から約100km、函館から約150km）</li>
+                    <li><strong>比率 1:2.0</strong> → さらに札幌寄りの円<br>
+                        円周上の例: 苫小牧市付近（札幌から約60km、函館から約120km）</li>
+                    <li><strong>比率 1:0.5</strong> → 函館寄りの円<br>
+                        円周上の例: 森町付近（札幌から約120km、函館から約60km）</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 25px;">💡 考察</h3>
+            <div style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <p><strong>1. 幾何学的性質の観察</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>距離比率kが1に近いほど、円の半径は大きくなり、k = 1で無限大（直線）になる</li>
+                    <li>k > 1の場合、円は地点Aに近い側に形成され、k < 1の場合は地点Bに近い側に形成される</li>
+                    <li>kが1から離れるほど、円は小さくなり、より近い地点の周辺に集中する</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>2. 実用的応用の可能性</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>物流拠点の配置:</strong> 札幌と函館の2つの配送センターから、配送コストの比率が一定となる地域を特定し、最適な中継拠点を決定できる</li>
+                    <li><strong>サービスエリアの設定:</strong> 2つの病院や消防署からの到達時間の比が一定となる地域を可視化し、サービスの公平性を評価できる</li>
+                    <li><strong>商圏分析:</strong> 2つの商業施設からの距離比に基づいて、顧客の来店傾向を予測し、新規出店の候補地を選定できる</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>3. 北海道の地理的特性との関連</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>北海道は広大な面積を持つため、都市間の距離が大きく、アポロニウスの円による地域区分が実用的</li>
+                    <li>冬季の積雪により道路距離と直線距離の差が大きくなるため、季節による補正が必要</li>
+                    <li>海岸線や山岳地帯により、実際のアクセス性は単純な距離比とは異なる場合がある</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>4. 数学的発展性</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>3点以上の基準点を設定した場合、複数のアポロニウスの円の交点を分析することで、より複雑な地域区分が可能</li>
+                    <li>距離の定義をユークリッド距離から道路距離や時間距離に変更することで、より現実的なモデルを構築できる</li>
+                    <li>重み付き距離（人口密度や経済規模を考慮）を導入することで、より実用的な分析が可能</li>
+                </ul>
+            </div>
+
+            <div class="legend" style="margin-top: 20px;">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e74c3c;"></div>
+                    <span>地点A（札幌市）</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3498db;"></div>
+                    <span>地点B（函館市）</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #2ecc71;"></div>
+                    <span>アポロニウスの円</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #95a5a6;"></div>
+                    <span>接続線</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 地図の初期化
+        const map = L.map('map').setView([43.0, 141.5], 8);
+
+        // タイルレイヤーの追加
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let markerA, markerB, line, circle;
+
+        // アポロニウスの円を計算
+        function calculateApollonius(latA, lngA, latB, lngB, ratio) {
+            // 2点間の距離を計算（簡易的な平面近似）
+            const dx = (lngB - lngA) * Math.cos((latA + latB) / 2 * Math.PI / 180);
+            const dy = latB - latA;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // 円の中心を計算
+            const k = ratio * ratio;
+            const centerLng = (lngA - k * lngB) / (1 - k);
+            const centerLat = (latA - k * latB) / (1 - k);
+
+            // 円の半径を計算
+            const radiusDx = (centerLng - lngA) * Math.cos(centerLat * Math.PI / 180);
+            const radiusDy = centerLat - latA;
+            const radius = Math.sqrt(radiusDx * radiusDx + radiusDy * radiusDy);
+
+            return {
+                center: [centerLat, centerLng],
+                radius: radius * 111000 // 度をメートルに変換（概算）
+            };
+        }
+
+        // 地図を更新
+        function updateMap() {
+            const latA = parseFloat(document.getElementById('latA').value);
+            const lngA = parseFloat(document.getElementById('lngA').value);
+            const latB = parseFloat(document.getElementById('latB').value);
+            const lngB = parseFloat(document.getElementById('lngB').value);
+            const ratio = parseFloat(document.getElementById('ratio').value);
+
+            // 既存のマーカーとラインを削除
+            if (markerA) map.removeLayer(markerA);
+            if (markerB) map.removeLayer(markerB);
+            if (line) map.removeLayer(line);
+            if (circle) map.removeLayer(circle);
+
+            // マーカーAを追加
+            markerA = L.circleMarker([latA, lngA], {
+                radius: 10,
+                fillColor: '#e74c3c',
+                color: '#fff',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).addTo(map);
+            markerA.bindPopup('<b>地点A</b><br>札幌市<br>緯度: ' + latA + '<br>経度: ' + lngA);
+
+            // マーカーBを追加
+            markerB = L.circleMarker([latB, lngB], {
+                radius: 10,
+                fillColor: '#3498db',
+                color: '#fff',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).addTo(map);
+            markerB.bindPopup('<b>地点B</b><br>函館市<br>緯度: ' + latB + '<br>経度: ' + lngB);
+
+            // 接続線を追加
+            line = L.polyline([[latA, lngA], [latB, lngB]], {
+                color: '#95a5a6',
+                weight: 2,
+                opacity: 0.7,
+                dashArray: '5, 10'
+            }).addTo(map);
+
+            // アポロニウスの円を計算して追加
+            if (ratio !== 1.0) {
+                const apollonius = calculateApollonius(latA, lngA, latB, lngB, ratio);
+                circle = L.circle(apollonius.center, {
+                    radius: apollonius.radius,
+                    color: '#2ecc71',
+                    weight: 3,
+                    opacity: 0.8,
+                    fillOpacity: 0.1
+                }).addTo(map);
+                circle.bindPopup('<b>アポロニウスの円</b><br>距離比率: 1 : ' + ratio);
+
+                // 地図の表示範囲を調整
+                const bounds = L.latLngBounds([
+                    [latA, lngA],
+                    [latB, lngB],
+                    apollonius.center
+                ]);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            } else {
+                // 比率が1:1の場合は垂直二等分線（実装省略）
+                const bounds = L.latLngBounds([[latA, lngA], [latB, lngB]]);
+                map.fitBounds(bounds, { padding: [100, 100] });
+            }
+        }
+
+        // イベントリスナーを設定
+        document.getElementById('latA').addEventListener('input', updateMap);
+        document.getElementById('lngA').addEventListener('input', updateMap);
+        document.getElementById('latB').addEventListener('input', updateMap);
+        document.getElementById('lngB').addEventListener('input', updateMap);
+        document.getElementById('ratio').addEventListener('input', function () {
+            document.getElementById('ratioValue').textContent = this.value;
+            updateMap();
+        });
+
+        // 初期表示
+        updateMap();
+    </script>
+</body>
+
+</html>

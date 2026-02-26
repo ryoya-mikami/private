@@ -1,0 +1,231 @@
+Country,Deaths,quartile,decile
+Brunei Darussalam,0.0,Q1 (0-25%),D1
+German Democratic Republic,0.0,Q1 (0-25%),D1
+Isle of Man,0.0,Q1 (0-25%),D1
+Palau,0.0,Q1 (0-25%),D1
+Tokelau,0.0,Q1 (0-25%),D1
+Saint Helena,0.0,Q1 (0-25%),D1
+Qatar,0.0,Q1 (0-25%),D1
+Liechtenstein,1.0,Q1 (0-25%),D1
+Cayman Islands,2.0,Q1 (0-25%),D1
+Niue,2.0,Q1 (0-25%),D1
+Singapore,3.0,Q1 (0-25%),D1
+Eritrea,3.0,Q1 (0-25%),D1
+Kuwait,3.0,Q1 (0-25%),D1
+Sint Maarten (Dutch part),4.0,Q1 (0-25%),D1
+Saint Barthélemy,4.0,Q1 (0-25%),D1
+Bermuda,4.0,Q1 (0-25%),D1
+United Arab Emirates,4.0,Q1 (0-25%),D1
+Turks and Caicos Islands,4.0,Q1 (0-25%),D1
+Northern Mariana Islands,5.0,Q1 (0-25%),D1
+Suriname,5.0,Q1 (0-25%),D1
+Marshall Islands,6.0,Q1 (0-25%),D1
+Wallis and Futuna Islands,6.0,Q1 (0-25%),D1
+Tuvalu,6.0,Q1 (0-25%),D1
+Saint Kitts and Nevis,6.0,Q1 (0-25%),D1
+Seychelles,8.0,Q1 (0-25%),D2
+Anguilla,9.0,Q1 (0-25%),D2
+British Virgin Islands,9.0,Q1 (0-25%),D2
+French Guiana,10.0,Q1 (0-25%),D2
+"China, Macao Special Administrative Region",10.0,Q1 (0-25%),D2
+Turkmenistan,11.0,Q1 (0-25%),D2
+Saint Martin (French Part),12.0,Q1 (0-25%),D2
+Antigua and Barbuda,13.0,Q1 (0-25%),D2
+Netherlands Antilles,13.0,Q1 (0-25%),D2
+State of Palestine,17.0,Q1 (0-25%),D2
+United States Virgin Islands,17.0,Q1 (0-25%),D2
+New Caledonia,18.0,Q1 (0-25%),D2
+Guam,20.0,Q1 (0-25%),D2
+Kiribati,20.0,Q1 (0-25%),D2
+Serbia Montenegro,21.0,Q1 (0-25%),D2
+Czechoslovakia,24.0,Q1 (0-25%),D2
+Equatorial Guinea,25.0,Q1 (0-25%),D2
+Tonga,31.0,Q1 (0-25%),D2
+French Polynesia,31.0,Q1 (0-25%),D2
+Cook Islands,32.0,Q1 (0-25%),D2
+Guyana,34.0,Q1 (0-25%),D2
+Montserrat,43.0,Q1 (0-25%),D2
+Uruguay,46.0,Q1 (0-25%),D3
+Trinidad and Tobago,47.0,Q1 (0-25%),D3
+Saint Lucia,48.0,Q1 (0-25%),D3
+Iceland,51.0,Q1 (0-25%),D3
+Grenada,53.0,Q1 (0-25%),D3
+Barbados,62.0,Q1 (0-25%),D3
+Azerbaijan,68.0,Q1 (0-25%),D3
+North Macedonia,69.0,Q1 (0-25%),D3
+Belarus,74.0,Q1 (0-25%),D3
+Micronesia (Federated States of),77.0,Q1 (0-25%),D3
+Bosnia and Herzegovina,77.0,Q1 (0-25%),D3
+Canary Islands,84.0,Q1 (0-25%),D3
+Mauritius,85.0,Q2 (25-50%),D3
+Montenegro,92.0,Q2 (25-50%),D3
+Republic of Moldova,93.0,Q2 (25-50%),D3
+Timor-Leste,93.0,Q2 (25-50%),D3
+Georgia,94.0,Q2 (25-50%),D3
+Sweden,96.0,Q2 (25-50%),D3
+Uzbekistan,104.0,Q2 (25-50%),D3
+Bahrain,111.0,Q2 (25-50%),D3
+Gabon,117.0,Q2 (25-50%),D3
+Lesotho,125.0,Q2 (25-50%),D3
+American Samoa,130.0,Q2 (25-50%),D3
+Ireland,134.0,Q2 (25-50%),D4
+Azores Islands,135.0,Q2 (25-50%),D4
+Israel,144.0,Q2 (25-50%),D4
+Malta,146.0,Q2 (25-50%),D4
+Norway,148.0,Q2 (25-50%),D4
+Sao Tome and Principe,214.0,Q2 (25-50%),D4
+Iraq,233.0,Q2 (25-50%),D4
+Réunion,243.0,Q2 (25-50%),D4
+Luxembourg,247.0,Q2 (25-50%),D4
+Vanuatu,254.0,Q2 (25-50%),D4
+Latvia,255.0,Q2 (25-50%),D4
+Estonia,281.0,Q2 (25-50%),D4
+Mauritania,288.0,Q2 (25-50%),D4
+Bhutan,314.0,Q2 (25-50%),D4
+Maldives,325.0,Q2 (25-50%),D4
+Oman,343.0,Q2 (25-50%),D4
+Djibouti,344.0,Q2 (25-50%),D4
+Cyprus,362.0,Q2 (25-50%),D4
+Finland,363.0,Q2 (25-50%),D4
+Paraguay,386.0,Q2 (25-50%),D4
+Gambia,442.0,Q2 (25-50%),D4
+Bahamas,450.0,Q2 (25-50%),D4
+Denmark,468.0,Q2 (25-50%),D4
+Kyrgyzstan,483.0,Q2 (25-50%),D5
+Germany Federal Republic,501.0,Q2 (25-50%),D5
+People's Democratic Republic of Yemen,507.0,Q2 (25-50%),D5
+South Sudan,510.0,Q2 (25-50%),D5
+Panama,524.0,Q2 (25-50%),D5
+Samoa,534.0,Q2 (25-50%),D5
+Slovenia,551.0,Q2 (25-50%),D5
+Namibia,555.0,Q2 (25-50%),D5
+Lebanon,645.0,Q2 (25-50%),D5
+Jordan,648.0,Q2 (25-50%),D5
+Fiji,651.0,Q2 (25-50%),D5
+Comoros,678.0,Q2 (25-50%),D5
+Botswana,698.0,Q2 (25-50%),D5
+Kazakhstan,703.0,Q2 (25-50%),D5
+Eswatini,709.0,Q2 (25-50%),D5
+Lithuania,732.0,Q2 (25-50%),D5
+Slovakia,817.0,Q2 (25-50%),D5
+Solomon Islands,820.0,Q2 (25-50%),D5
+Tunisia,987.0,Q2 (25-50%),D5
+Côte d’Ivoire,988.0,Q2 (25-50%),D5
+Central African Republic,1022.0,Q2 (25-50%),D5
+Serbia,1137.0,Q2 (25-50%),D5
+Togo,1199.0,Q2 (25-50%),D5
+Czechia,1249.0,Q3 (50-75%),D6
+Burundi,1277.0,Q3 (50-75%),D6
+Rwanda,1387.0,Q3 (50-75%),D6
+Yugoslavia,1413.0,Q3 (50-75%),D6
+Puerto Rico,1499.0,Q3 (50-75%),D6
+Ukraine,1517.0,Q3 (50-75%),D6
+Albania,1518.0,Q3 (50-75%),D6
+Senegal,1559.0,Q3 (50-75%),D6
+Malaysia,1589.0,Q3 (50-75%),D6
+Mongolia,1590.0,Q3 (50-75%),D6
+Lao People's Democratic Republic,1617.0,Q3 (50-75%),D6
+Benin,1618.0,Q3 (50-75%),D6
+Saudi Arabia,1647.0,Q3 (50-75%),D6
+Austria,1721.0,Q3 (50-75%),D6
+Saint Vincent and the Grenadines,1722.0,Q3 (50-75%),D6
+Ghana,1854.0,Q3 (50-75%),D6
+Belize,1860.0,Q3 (50-75%),D6
+Switzerland,2011.0,Q3 (50-75%),D6
+Hungary,2018.0,Q3 (50-75%),D6
+Guadeloupe,2054.0,Q3 (50-75%),D6
+Dominica,2140.0,Q3 (50-75%),D6
+Croatia,2161.0,Q3 (50-75%),D6
+Zambia,2165.0,Q3 (50-75%),D6
+Tajikistan,2276.0,Q3 (50-75%),D7
+Australia,2310.0,Q3 (50-75%),D7
+Bolivia (Plurinational State of),2432.0,Q3 (50-75%),D7
+Cambodia,2554.0,Q3 (50-75%),D7
+Jamaica,2683.0,Q3 (50-75%),D7
+Yemen Arab Republic,2857.0,Q3 (50-75%),D7
+Yemen,2865.0,Q3 (50-75%),D7
+Armenia,2899.0,Q3 (50-75%),D7
+Costa Rica,2998.0,Q3 (50-75%),D7
+Democratic People's Republic of Korea,3017.0,Q3 (50-75%),D7
+Guinea-Bissau,3044.0,Q3 (50-75%),D7
+South Africa,3111.0,Q3 (50-75%),D7
+Bulgaria,3268.0,Q3 (50-75%),D7
+Poland,3775.0,Q3 (50-75%),D7
+Guinea,4143.0,Q3 (50-75%),D7
+Mali,4184.0,Q3 (50-75%),D7
+Congo,4809.0,Q3 (50-75%),D7
+Cuba,5207.0,Q3 (50-75%),D7
+Madagascar,5498.0,Q3 (50-75%),D7
+Liberia,5567.0,Q3 (50-75%),D7
+Netherlands (Kingdom of the),5662.0,Q3 (50-75%),D7
+Belgium,5868.0,Q3 (50-75%),D7
+Dominican Republic,5902.0,Q3 (50-75%),D7
+Angola,6050.0,Q3 (50-75%),D8
+Malawi,6093.0,Q3 (50-75%),D8
+Syrian Arab Republic,6150.0,Q3 (50-75%),D8
+Cameroon,6500.0,Q3 (50-75%),D8
+Sierra Leone,6761.0,Q3 (50-75%),D8
+New Zealand,7445.0,Q3 (50-75%),D8
+Portugal,7864.0,Q3 (50-75%),D8
+Kenya,8123.0,Q3 (50-75%),D8
+El Salvador,8148.0,Q3 (50-75%),D8
+Zimbabwe,9144.0,Q3 (50-75%),D8
+Republic of Korea,9205.0,Q3 (50-75%),D8
+Romania,9988.0,Q4 (75-100%),D8
+Greece,10333.0,Q4 (75-100%),D8
+Papua New Guinea,10464.0,Q4 (75-100%),D8
+United Republic of Tanzania,10806.0,Q4 (75-100%),D8
+Chad,11133.0,Q4 (75-100%),D8
+Algeria,11946.0,Q4 (75-100%),D8
+Argentina,12062.0,Q4 (75-100%),D8
+Egypt,12100.0,Q4 (75-100%),D8
+Libya,13520.0,Q4 (75-100%),D8
+United Kingdom of Great Britain and Northern Ireland,13797.0,Q4 (75-100%),D8
+Brazil,14119.0,Q4 (75-100%),D8
+Thailand,14680.0,Q4 (75-100%),D8
+Ecuador,15419.0,Q4 (75-100%),D9
+Taiwan (Province of China),16986.0,Q4 (75-100%),D9
+Burkina Faso,17304.0,Q4 (75-100%),D9
+Nicaragua,17306.0,Q4 (75-100%),D9
+Morocco,18825.0,Q4 (75-100%),D9
+Democratic Republic of the Congo,21630.0,Q4 (75-100%),D9
+"China, Hong Kong Special Administrative Region",24361.0,Q4 (75-100%),D9
+Germany,24508.0,Q4 (75-100%),D9
+Mexico,25254.0,Q4 (75-100%),D9
+Nepal,25768.0,Q4 (75-100%),D9
+Viet Nam,27683.0,Q4 (75-100%),D9
+Honduras,28818.0,Q4 (75-100%),D9
+Martinique,30096.0,Q4 (75-100%),D9
+Afghanistan,31097.0,Q4 (75-100%),D9
+Venezuela (Bolivarian Republic of),31488.0,Q4 (75-100%),D9
+Nigeria,34479.0,Q4 (75-100%),D9
+Colombia,34878.0,Q4 (75-100%),D9
+France,36474.0,Q4 (75-100%),D9
+Spain,37570.0,Q4 (75-100%),D9
+Sri Lanka,40151.0,Q4 (75-100%),D9
+United States of America,45551.0,Q4 (75-100%),D9
+Somalia,50252.0,Q4 (75-100%),D9
+Canada,52755.0,Q4 (75-100%),D9
+Chile,60938.0,Q4 (75-100%),D10
+Russian Federation,61679.0,Q4 (75-100%),D10
+Philippines,73634.0,Q4 (75-100%),D10
+Guatemala,80334.0,Q4 (75-100%),D10
+Cabo Verde,85298.0,Q4 (75-100%),D10
+Peru,97376.0,Q4 (75-100%),D10
+Mozambique,107462.0,Q4 (75-100%),D10
+Myanmar,147559.0,Q4 (75-100%),D10
+Türkiye,150115.0,Q4 (75-100%),D10
+Iran (Islamic Republic of),163502.0,Q4 (75-100%),D10
+Sudan,164241.0,Q4 (75-100%),D10
+Italy,171404.0,Q4 (75-100%),D10
+Pakistan,181749.0,Q4 (75-100%),D10
+Niger,196580.0,Q4 (75-100%),D10
+Uganda,207817.0,Q4 (75-100%),D10
+Japan,239761.0,Q4 (75-100%),D10
+Indonesia,243370.0,Q4 (75-100%),D10
+Haiti,253200.0,Q4 (75-100%),D10
+Ethiopia,417252.0,Q4 (75-100%),D10
+Bangladesh,2994475.0,Q4 (75-100%),D10
+Soviet Union,3857423.0,Q4 (75-100%),D10
+India,9138244.0,Q4 (75-100%),D10
+China,12522453.0,Q4 (75-100%),D10

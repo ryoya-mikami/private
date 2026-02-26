@@ -1,0 +1,31 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             log_deaths   R-squared:                       0.179
+Model:                            OLS   Adj. R-squared:                  0.178
+Method:                 Least Squares   F-statistic:                     535.8
+Date:                Sun, 18 Jan 2026   Prob (F-statistic):               0.00
+Time:                        16:06:26   Log-Likelihood:                -23638.
+No. Observations:               12332   AIC:                         4.729e+04
+Df Residuals:                   12326   BIC:                         4.733e+04
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================================
+                                              coef    std err          t      P>|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------------------
+Intercept                                  71.6111      1.439     49.749      0.000      68.790      74.433
+C(Disaster_Subgroup2)[T.Climatological]    -0.8532      0.104     -8.169      0.000      -1.058      -0.648
+C(Disaster_Subgroup2)[T.Geophysical]       -1.0955      0.065    -16.728      0.000      -1.224      -0.967
+C(Disaster_Subgroup2)[T.Hydrological]      -0.8604      0.051    -16.738      0.000      -0.961      -0.760
+C(Disaster_Subgroup2)[T.Meteorological]    -1.0442      0.053    -19.873      0.000      -1.147      -0.941
+Start_Year                                 -0.0338      0.001    -46.979      0.000      -0.035      -0.032
+==============================================================================
+Omnibus:                     2312.601   Durbin-Watson:                   1.727
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5630.111
+Skew:                           1.047   Prob(JB):                         0.00
+Kurtosis:                       5.563   Cond. No.                     1.94e+05
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.94e+05. This might indicate that there are
+strong multicollinearity or other numerical problems.

@@ -1,0 +1,37 @@
+Total rows: 17278
+Columns:
+ - Disaster Subgroup
+ - Disaster Type
+ - Disaster Subtype
+ - ISO
+ - Country
+ - Subregion
+ - Region
+ - Latitude
+ - Longitude
+ - Start Year
+ - Total Deaths
+
+Total events with numeric Total_Deaths: 12332
+Missing Total_Deaths (NA): 4946
+
+Total_Deaths stats (events with numeric values):
+ min: 1
+ median: 18.0
+ mean: 2650.225024326954
+ max: 3700000
+
+Event-level quartile table saved to: event_deaths_quartiles.csv
+Country-level quartiles/deciles saved to: country_deaths_quartiles_full.csv
+
+Top 10 countries by total deaths:
+China: 12522453
+India: 9138244
+Soviet Union: 3857423
+Bangladesh: 2994475
+Ethiopia: 417252
+Haiti: 253200
+Indonesia: 243370
+Japan: 239761
+Uganda: 207817
+Niger: 196580
